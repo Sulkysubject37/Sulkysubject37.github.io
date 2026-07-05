@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>So He Won't Disappear — An Essay on Koo Kyo-hwan</title>
+<meta name="description" content="A sourced structural essay on Koo Kyo-hwan, evident acting, anti-disappearance, tempo, objects, and performance as proof across his roles and directorial work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#ece6d5;color:#1a150f;font-family:'Fraunces',Georgia,serif;overflow-x:hidden;line-height:1}
+
+:root{
+  --paper:#ece6d5;--paper2:#e2d9c0;--paper3:#d6cba8;
+  --ink:#1a150f;--ink2:#2a2318;
+  --crimson:#a91d1f;--crimson2:#8a1518;--crimson-tint:rgba(169,29,31,.08);
+  --bronze:#7a5a1e;--bronze2:#5c4315;
+  --muted:rgba(26,21,15,.6);--dim:rgba(26,21,15,.32);--line:rgba(26,21,15,.15);
+  --display:'Fraunces',Georgia,serif;
+  --kicker:'Barlow Condensed',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:9000;background:var(--crimson);transition:width .07s linear}
+.r{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+.r.on{opacity:1;transform:none}
+.rf{opacity:0;transition:opacity 1.3s ease}
+.rf.on{opacity:1}
+
+#nav{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:8000;display:flex;flex-direction:column;gap:7px}
+.nd{width:3px;height:3px;background:rgba(26,21,15,.18);border:none;cursor:pointer;padding:0;transition:.3s}
+.nd.on{background:var(--crimson);height:15px}
+@media(max-width:600px){#nav{display:none}}
+
+/* ═══ SHARED EDITORIAL SYSTEM ═══ */
+.spread{padding:76px clamp(20px,6vw,90px);position:relative}
+.spread-inner{max-width:820px;margin:0 auto}
+.spread-inner.wide{max-width:1040px}
+.kicker{
+  font-family:var(--kicker);font-size:13px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--crimson);margin-bottom:.5rem;
+  display:flex;align-items:center;gap:10px;
+}
+.kicker::after{content:'';flex:1;height:1px;background:var(--line);max-width:60px}
+.deck{
+  font-family:var(--kicker);font-style:italic;font-weight:400;font-size:16px;
+  color:var(--muted);letter-spacing:.01em;margin-bottom:1.8rem;max-width:600px;
+}
+.headline{
+  font-family:var(--display);font-weight:700;font-optical-sizing:auto;
+  font-size:clamp(28px,4.6vw,54px);line-height:1.03;letter-spacing:-.015em;
+  color:var(--ink);margin-bottom:1.6rem;
+}
+.headline em{font-style:italic;font-weight:600;color:var(--crimson)}
+.byline{
+  font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--dim);
+  text-transform:uppercase;margin-bottom:2.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--line);
+}
+.body-txt{font-family:var(--display);font-weight:400;font-size:18px;line-height:1.78;color:rgba(26,21,15,.82);margin-bottom:1.3rem;max-width:660px}
+.body-txt em{font-style:italic;color:var(--ink)}
+.body-txt b{font-weight:700;color:var(--crimson2)}
+.drop::first-letter{
+  font-family:var(--display);font-weight:900;font-size:76px;line-height:.7;
+  float:left;margin:2px 10px 0 0;color:var(--crimson);
+}
+.cite{
+  font-family:var(--mono);font-size:10.5px;color:var(--dim);line-height:1.85;
+  border-left:2px solid var(--paper3);padding-left:.9rem;margin:1.2rem 0;
+}
+.pullquote{
+  border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  padding:1.7rem 0;margin:2.2rem 0;max-width:640px;
+}
+.pullquote-text{
+  font-family:var(--display);font-style:italic;font-weight:600;
+  font-size:clamp(19px,2.6vw,25px);line-height:1.42;color:var(--ink);
+}
+.pullquote-attr{font-family:var(--kicker);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--crimson);margin-top:.7rem}
+
+/* fact sidebar box, magazine style */
+.factbox{border:1px solid var(--line);background:rgba(169,29,31,.03);padding:1.3rem 1.5rem;margin:1.8rem 0;max-width:640px}
+.factbox-label{font-family:var(--kicker);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--bronze);margin-bottom:.7rem;border-bottom:1px solid var(--line);padding-bottom:.5rem}
+.factbox-row{display:grid;grid-template-columns:130px 1fr;gap:.8rem;padding:.4rem 0;font-size:13.5px}
+.factbox-k{font-family:var(--kicker);font-weight:600;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;font-size:11px}
+.factbox-v{color:rgba(26,21,15,.75);line-height:1.55}
+
+/* two column editorial grid */
+.editorial-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.6rem;margin:1.8rem 0}
+@media(max-width:680px){.editorial-grid{grid-template-columns:1fr}}
+.ed-card{border-top:2px solid var(--ink);padding-top:1rem}
+.ed-card-label{font-family:var(--kicker);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--crimson);margin-bottom:.4rem}
+.ed-card-title{font-family:var(--display);font-weight:700;font-size:19px;color:var(--ink);margin-bottom:.6rem}
+.ed-card-p{font-size:14px;line-height:1.72;color:rgba(26,21,15,.68)}
+.ed-card-p em{font-style:italic;color:var(--ink)}
+.ed-card-cite{font-family:var(--mono);font-size:9.5px;color:var(--dim);margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--line);line-height:1.6}
+
+/* section band */
+.band{padding:.55rem clamp(20px,5vw,90px);display:flex;justify-content:space-between;align-items:center;font-family:var(--kicker);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;position:sticky;top:0;z-index:100;background:var(--paper);border-top:2px solid var(--ink);border-bottom:1px solid var(--line);color:var(--dim)}
+.band .fno{color:var(--crimson)}
+
+/* ═══ COVER — magazine masthead ═══ */
+#cover{min-height:100vh;background:var(--paper);display:flex;flex-direction:column;position:relative;overflow:hidden}
+#cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 75% 12%,rgba(169,29,31,.06) 0%,transparent 42%);pointer-events:none}
+.masthead-bar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.2rem clamp(20px,5vw,60px);border-bottom:2px solid var(--ink);
+  font-family:var(--kicker);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+}
+.cover-main{flex:1;display:grid;grid-template-columns:1.4fr 1fr;gap:0;align-items:stretch}
+@media(max-width:820px){.cover-main{grid-template-columns:1fr}}
+.cover-left{padding:clamp(30px,6vw,70px);display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--line)}
+@media(max-width:820px){.cover-left{border-right:none;border-bottom:1px solid var(--line)}}
+.nameplate{
+  font-family:var(--display);font-weight:900;font-size:clamp(64px,11vw,148px);
+  line-height:.82;letter-spacing:-.03em;color:var(--ink);
+}
+.nameplate .last{color:var(--crimson);font-style:italic;font-weight:700}
+.cover-issue{font-family:var(--kicker);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--bronze);margin:1.2rem 0 .5rem}
+.cover-dek{font-family:var(--display);font-style:italic;font-size:clamp(15px,2vw,19px);color:var(--muted);line-height:1.6;max-width:460px}
+.cover-right{padding:clamp(24px,5vw,50px);display:flex;flex-direction:column;justify-content:center;gap:0}
+.coverline{
+  display:flex;align-items:baseline;gap:.7rem;padding:.85rem 0;border-bottom:1px solid var(--line);
+}
+.coverline-n{font-family:var(--mono);font-size:10px;color:var(--dim)}
+.coverline-t{font-family:var(--kicker);font-weight:600;font-size:14.5px;letter-spacing:.02em;color:var(--ink);text-transform:uppercase}
+.coverline-t .accent{color:var(--crimson)}
+.coverline-s{font-family:var(--display);font-style:italic;font-size:12.5px;color:var(--muted);display:block;margin-top:.15rem}
+
+/* stamp seal — signature element */
+.seal{
+  width:96px;height:96px;border-radius:6px;
+  border:3px solid var(--crimson);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--crimson);transform:rotate(-6deg);
+  position:relative;margin-bottom:1.4rem;
+  box-shadow:0 0 0 1px rgba(169,29,31,.15) inset;
+}
+.seal-txt{font-family:var(--display);font-weight:900;font-size:30px;line-height:1;text-align:center;letter-spacing:-.02em}
+.seal::after{content:'';position:absolute;inset:6px;border:1px solid rgba(169,29,31,.4);border-radius:3px}
+
+.cover-scroll{text-align:center;padding:1rem 0 1.6rem;font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);animation:blink 3s steps(1) infinite;border-top:1px solid var(--line)}
+@keyframes blink{50%{opacity:0}}
+
+/* ═══ OBJECT INDEX — signature spread ═══ */
+#objects{background:var(--ink);color:var(--paper);padding:76px clamp(20px,6vw,90px)}
+.obj-inner{max-width:1040px;margin:0 auto}
+.obj-kicker{font-family:var(--kicker);font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#e8a840;margin-bottom:.5rem}
+.obj-headline{font-family:var(--display);font-weight:700;font-size:clamp(28px,4.6vw,52px);line-height:1.03;letter-spacing:-.015em;color:var(--paper);margin-bottom:1rem}
+.obj-headline em{font-style:italic;color:#e05a4a}
+.obj-deck{font-family:var(--display);font-style:italic;font-size:16px;color:rgba(236,230,213,.55);max-width:620px;margin-bottom:2.6rem}
+.obj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid rgba(236,230,213,.15)}
+@media(max-width:800px){.obj-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.obj-grid{grid-template-columns:1fr}}
+.obj-card{padding:1.8rem 1.4rem;border-right:1px solid rgba(236,230,213,.12);border-bottom:1px solid rgba(236,230,213,.12)}
+.obj-card:nth-child(4n){border-right:none}
+@media(max-width:800px){.obj-card:nth-child(2n){border-right:none}}
+@media(max-width:480px){.obj-card{border-right:none!important}}
+.obj-icon{width:100%;height:64px;margin-bottom:1.2rem}
+.obj-icon svg{width:100%;height:100%}
+.obj-num{font-family:var(--mono);font-size:9px;color:rgba(236,230,213,.3);letter-spacing:.1em;margin-bottom:.4rem}
+.obj-name{font-family:var(--display);font-weight:700;font-size:17px;color:var(--paper);margin-bottom:.6rem}
+.obj-p{font-size:12.5px;line-height:1.68;color:rgba(236,230,213,.55);font-weight:300}
+.obj-p em{font-style:italic;color:rgba(236,230,213,.85)}
+.obj-cite{font-family:var(--mono);font-size:8.5px;color:rgba(236,230,213,.28);margin-top:.6rem;line-height:1.6}
+
+/* colophon / bibliography */
+#bib{background:var(--paper2);padding:76px clamp(20px,6vw,90px)}
+.bib-inner{max-width:900px;margin:0 auto}
+.bib-h{font-family:var(--display);font-weight:900;font-size:clamp(24px,3.6vw,38px);margin-bottom:.4rem;color:var(--ink)}
+.bib-sub{font-family:var(--kicker);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2.2rem;border-bottom:2px solid var(--ink);padding-bottom:1rem}
+.bib-list{display:flex;flex-direction:column;gap:.75rem}
+.bib-item{font-family:var(--mono);font-size:11.5px;line-height:1.65;color:rgba(26,21,15,.72);padding-left:1.5rem;text-indent:-1.5rem}
+.bib-item .n{color:var(--crimson);font-weight:500}
+.bib-item em{font-style:italic}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav id="nav">
+  <button class="nd on" data-s="cover"></button>
+  <button class="nd" data-s="s0"></button>
+  <button class="nd" data-s="s1"></button>
+  <button class="nd" data-s="s2"></button>
+  <button class="nd" data-s="objects"></button>
+  <button class="nd" data-s="s3"></button>
+  <button class="nd" data-s="s4"></button>
+  <button class="nd" data-s="s5"></button>
+  <button class="nd" data-s="s6"></button>
+  <button class="nd" data-s="s7"></button>
+  <button class="nd" data-s="s8"></button>
+  <button class="nd" data-s="s9"></button>
+  <button class="nd" data-s="s10"></button>
+  <button class="nd" data-s="bib"></button>
+</nav>
+
+<!-- ══════════ COVER ══════════ -->
+<section id="cover">
+  <div class="masthead-bar">
+    <span>So He Won't Disappear — No. 01</span>
+    <span>An Essay on Evident Acting</span>
+  </div>
+  <div class="cover-main">
+    <div class="cover-left">
+      <div class="seal rf"><div class="seal-txt">구<br>교<br>환</div></div>
+      <div class="nameplate r">KOO<br>KYO<span class="last">-HWAN</span></div>
+      <div class="cover-issue r">So He Won't Disappear / Actor / Director / Editor / Screenwriter</div>
+      <p class="cover-dek r">The actor whose performances keep turning transformation into evidence: a body altered, a voice rebuilt, a tempo accelerated, an object recovered, a character talking because silence would mean disappearance.</p>
+    </div>
+    <div class="cover-right">
+      <div class="coverline r"><span class="coverline-n">01</span><div><span class="coverline-t">THE WITNESS PROBLEM</span><span class="coverline-s">Performance as proof that someone was here.</span></div></div>
+      <div class="coverline r"><span class="coverline-n">02</span><div><span class="coverline-t">JANE <span class="accent">·</span> THE REBUILD</span><span class="coverline-s">Mass, pitch, and the body as receipt.</span></div></div>
+      <div class="coverline r"><span class="coverline-n">03</span><div><span class="coverline-t">D.P. <span class="accent">·</span> SPEED AS SURVIVAL</span><span class="coverline-s">A comic register with ethical residue.</span></div></div>
+      <div class="coverline r"><span class="coverline-n">04</span><div><span class="coverline-t">PARASYTE: THE GREY <span class="accent">·</span> "I HIT FAST-FORWARD"</span><span class="coverline-s">Three-times speech as character architecture.</span></div></div>
+      <div class="coverline r"><span class="coverline-n">05</span><div><span class="coverline-t">WE ARE ALL TRYING HERE <span class="accent">·</span> ANTI-DISAPPEARANCE</span><span class="coverline-s">Talking as a defense against erasure.</span></div></div>
+      <div class="coverline r"><span class="coverline-n">·</span><div><span class="coverline-t">PLUS <span class="accent">·</span> THE EVIDENCE INDEX</span><span class="coverline-s">DVD. Motorcycle. Beard. Toothbrush.</span></div></div>
+    </div>
+  </div>
+  <div class="cover-scroll">Turn the page ▼</div>
+</section>
+
+<!-- ══════════ S0: PREFACE ══════════ -->
+<div class="band"><span>Preface</span><span class="fno">P.01</span></div>
+<section id="s0" class="spread">
+<div class="spread-inner">
+<div class="kicker r">Method &amp; Constraints</div>
+<h2 class="headline r">The subject is not eccentricity.<br>It is <em>evidence.</em></h2>
+<p class="body-txt drop r">This feature treats Koo Kyo-hwan (구교환, b. December 14, 1982) as a case study in evident acting: performance that leaves proof of its own construction. The evidence is not mystical. It is practical and visible: reported weight loss, a rebuilt vocal register, self-described tempo changes, credited writing and editing, directorial projects about artists trying to recover their own traces, and roles where speed or restraint becomes the character's method of staying legible.</p>
+<p class="body-txt r">The earlier frame was "tempo." That was too narrow. Tempo is one output. The deeper pattern is registration. His characters and self-authored films keep circling the same pressure: what happens to a person whose presence is unstable unless it is recorded, repeated, accelerated, exaggerated, preserved, or made physically undeniable?</p>
+<p class="body-txt r">This is still a constrained reading. No claim is made here about any diagnosable psychological condition, private motive, or hidden inner state. The argument stays with public work and documented claims. Where a source offers subjective critical impression rather than measured fact, that distinction is kept in the wording. The essay's wager is structural: across unrelated productions, the same problem keeps returning in different costumes. Not "who is Koo really?" but "why do so many of these performances behave like proof?"</p>
+<div class="cite r">[1] Wikipedia, "Koo Kyo-hwan" · [3] NamuWiki, "구교환"</div>
+</div>
+</section>
+
+<!-- ══════════ S1: THE BASELINE ══════════ -->
+<div class="band"><span>The Baseline</span><span class="fno">P.02</span></div>
+<section id="s1" class="spread">
+<div class="spread-inner">
+<div class="kicker r">Off-Camera</div>
+<h2 class="headline r">A low-visibility baseline<br>inside a profession built on <em>being seen.</em></h2>
+<p class="body-txt r">Koo was raised in Isu, Dongjak-gu, Seoul; his father ran a photography studio in Bangbae-dong for thirty years.<sup>[1]</sup> He entered the Seoul Institute of the Arts by accident — he wanted to study acting, did not know a separate theater department existed, and majored in acting within the film program instead.<sup>[1][3]</sup></p>
+<p class="body-txt r">In interviews he describes himself as introverted, more at ease alone or in small fixed groups than in the industry's high-visibility settings — a contrast he draws himself, repeatedly, against the loud characters he plays for a living.<sup>[2]</sup> A second recurring interview thread: an attraction to supernatural phenomena, cited by Koo as a factor in choosing projects.<sup>[2]</sup></p>
+<div class="pullquote r">
+<div class="pullquote-text">He has been with director Yi Ok-seop since 2013 — fellow alumni of the Seoul Institute of the Arts — and the two run a shared YouTube channel, 2x9HD, built from co-directed shorts and footage of ordinary, overlooked routines.</div>
+<div class="pullquote-attr">Sourced — Wikipedia [1] · KDramaStars [40]</div>
+</div>
+<p class="body-txt r">This matters because the work repeatedly stages a contradiction between private narrowness and public excess. The off-camera baseline is not used here as a psychological key. It functions as a negative control. The same person publicly known for quietness repeatedly builds characters whose existence depends on speed, irritation, chatter, bodily alteration, or an object that proves a performance occurred.</p>
+<p class="body-txt r">One constant relationship, sustained more than a decade. Many discontinuous performing bodies, rebuilt from scratch each time. The contrast is not gossip. It is the essay's first structural split: continuity in life, discontinuity in performance; low visibility in person, high evidence on screen.</p>
+<div class="cite r">[1] Wikipedia · [2] Grokipedia, profile section · [3] NamuWiki · [40] KDramaStars (2022)</div>
+</div>
+</section>
+
+<!-- ══════════ S2: THE DIRECTOR ══════════ -->
+<div class="band"><span>Behind the Camera</span><span class="fno">P.03</span></div>
+<section id="s2" class="spread">
+<div class="spread-inner wide">
+<div class="kicker r">2011 — 2019</div>
+<h2 class="headline r">Nine years making films <em>about a man</em><br>who cannot get his own films made.</h2>
+<p class="body-txt r">Koo's directing debut, <em>Turtles</em> (2011) — written, directed, edited, produced, and starring him — won the audience award at the Jeongdongjin Independent Film Festival.<sup>[33]</sup> In 2013 he wrote, directed, and starred in <em>Where Is My DVD?</em>, in which his character Go Gi-hwan chases down directors who never delivered him copies of his own short-film work — a plot summarized by critics as openly autobiographical and structured, in the final scene, as "preparation for his latest role." It closes on a cameo from Bong Joon-ho.<sup>[32][37]</sup></p>
+<p class="body-txt r">That premise is almost too exact. A performer is not searching for fame, applause, or revenge. He is searching for copies. The missing object is a storage medium. The crisis is archival. The question underneath the joke is severe: if the performance happened but cannot be retrieved, did it survive as anything more than rumor?</p>
+
+<div class="editorial-grid r">
+<div class="ed-card">
+<div class="ed-card-label">Co-directed with Yi Ok-seop</div>
+<div class="ed-card-title">Love Docu (2015)</div>
+<p class="ed-card-p">A couple attempts to fund their lives by filming a self-shot documentary of their own relationship. Koo co-wrote, co-directed, and co-edited.<sup>[34]</sup></p>
+<div class="ed-card-cite">[34] Grokipedia, directorial catalog</div>
+</div>
+<div class="ed-card">
+<div class="ed-card-label">Co-directed with Yi Ok-seop</div>
+<div class="ed-card-title">Fly to the Sky (2015)</div>
+<p class="ed-card-p">Won the Grand Prize in the Domestic Competition at the Asiana International Short Film Festival.<sup>[1][34]</sup></p>
+<div class="ed-card-cite">[1] Wikipedia · [34] Grokipedia</div>
+</div>
+<div class="ed-card">
+<div class="ed-card-label">Anthology segment</div>
+<div class="ed-card-title">Now Playing (2015)</div>
+<p class="ed-card-p">Koo directed, wrote, produced, edited, and starred in the "Dating Documentary" segment, which opened the Seoul Independent Film Festival.<sup>[1][34]</sup></p>
+<div class="ed-card-cite">[1] Wikipedia · [34] Grokipedia</div>
+</div>
+<div class="ed-card">
+<div class="ed-card-label">Feature debut, both</div>
+<div class="ed-card-title">Maggie (2018)</div>
+<p class="ed-card-p">Koo produced, wrote, and edited, and starred opposite Moon So-ri under Yi Ok-seop's direction. Won the Audience Award at Seoul Independent Film Festival, the CGV Art House Award at Busan, and the KBS Independent Film Award.<sup>[1][3]</sup></p>
+<div class="ed-card-cite">[1] Wikipedia · [3] NamuWiki</div>
+</div>
+</div>
+<p class="body-txt r">The recursion is structurally consistent: the majority of what Koo directs or co-directs is about actors, filmmakers, or couples making media about themselves. That is a documented pattern of subject matter — not a psychological inference — repeated across <em>Turtles</em>, <em>Where Is My DVD?</em>, and <em>Love Docu</em> alike.<sup>[32][34]</sup></p>
+<div class="pullquote r">
+<div class="pullquote-text">The early films do not merely represent artists. They represent artists trying to prove that their work, their relationships, and their failures have left a recoverable trace.</div>
+<div class="pullquote-attr">Structural reading of credited work</div>
+</div>
+<p class="body-txt r">This is where evident acting begins before the famous roles. The directorial work is already suspicious of disappearance. It keeps returning to media about media, footage about relationships, objects that preserve performances, and artists trapped between doing the work and proving that the work was done. The later acting roles inherit this pressure in bodily form.</p>
+<div class="cite r">[32] London Korean Film Festival, "Three short films" · [33] KOFIC, "KOO Kyohwan" · [37] KOFIC, "Where Is My DVD?" credits</div>
+</div>
+</section>
+
+<!-- ══════════ OBJECT INDEX — SIGNATURE SPREAD ══════════ -->
+<div class="band" style="background:var(--ink);color:rgba(236,230,213,.5);border-top-color:#e8a840"><span>The Evidence Index</span><span class="fno" style="color:#e8a840">P.04</span></div>
+<section id="objects">
+<div class="obj-inner">
+<div class="obj-kicker r">Recurring Props &amp; Visual Motifs</div>
+<h2 class="obj-headline r">Four objects that behave like <em>receipts</em>,<br>not decoration.</h2>
+<p class="obj-deck r">The DVD, motorcycle, beard, and toothbrush do not prove a single authorial master plan. They prove something narrower and more useful: across separate contexts, Koo's work repeatedly gives presence a physical remainder. The object is where a performance stops being mood and becomes evidence.</p>
+
+<div class="obj-grid">
+<div class="obj-card r">
+<div class="obj-icon"><svg viewBox="0 0 100 60" fill="none"><circle cx="50" cy="30" r="26" stroke="#ece6d5" stroke-width="1.4"/><circle cx="50" cy="30" r="8" stroke="#ece6d5" stroke-width="1.4"/><circle cx="50" cy="30" r="2" fill="#ece6d5"/><path d="M50 4 L50 12 M50 48 L50 56 M24 30 L32 30 M68 30 L76 30" stroke="#e8a840" stroke-width="1"/></svg></div>
+<div class="obj-num">01 — Object</div>
+<div class="obj-name">The DVD</div>
+<div class="obj-p">The entire plot engine of his directorial debut proper, <em>Where Is My DVD?</em> (2013): an actor's quest to physically recover disc copies of his own past performances. The object is not a MacGuffin. It is the film's argument that a performance without a retrievable artifact effectively did not happen.<sup>[37][41]</sup></div>
+<div class="obj-cite">[37] KOFIC · [41] Letterboxd credits archive</div>
+</div>
+
+<div class="obj-card r">
+<div class="obj-icon"><svg viewBox="0 0 100 60" fill="none"><rect x="18" y="30" width="50" height="16" rx="4" stroke="#ece6d5" stroke-width="1.4"/><circle cx="28" cy="48" r="8" stroke="#ece6d5" stroke-width="1.4"/><circle cx="62" cy="48" r="8" stroke="#ece6d5" stroke-width="1.4"/><path d="M68 30 L80 14 M62 30 L62 20" stroke="#ece6d5" stroke-width="1.4"/><path d="M74 18 L86 18" stroke="#e8a840" stroke-width="1"/></svg></div>
+<div class="obj-num">02 — Object</div>
+<div class="obj-name">The Motorcycle</div>
+<div class="obj-p">In <em>Parasyte: The Grey</em>, Koo self-reported adding a small showboating flourish after striking an opponent off a motorcycle, then a beat before riding off — because, in his own account, Kang-woo is "deeply immersed in his own charm" and would find a clean exit anticlimactic. The vehicle becomes a stage for a gesture that has nothing to do with getting anywhere.<sup>[16]</sup></div>
+<div class="obj-cite">[16] KOFIC interview, "Actor Koo Kyo-hwan in Parasyte: The Grey"</div>
+</div>
+
+<div class="obj-card r">
+<div class="obj-icon"><svg viewBox="0 0 100 60" fill="none"><path d="M40 12 C40 12 34 20 34 30 C34 42 44 50 50 50 C56 50 66 42 66 30 C66 20 60 12 60 12" stroke="#ece6d5" stroke-width="1.4"/><path d="M38 24 Q50 30 62 24" stroke="#e8a840" stroke-width="1"/><path d="M36 34 Q50 40 64 34" stroke="#ece6d5" stroke-width="1" opacity=".5"/></svg></div>
+<div class="obj-num">03 — Object</div>
+<div class="obj-name">The Beard</div>
+<div class="obj-p">Asked to characterize Seol Kang-woo's tempo, Koo isolated one exception to the character's total carelessness: <em>"the only weighty aspect about Kang-woo is perhaps his beard."</em> A single piece of facial hair carrying the entire gravity budget of an otherwise unanchored, three-times-normal-speed performance.<sup>[16]</sup></div>
+<div class="obj-cite">[16] KOFIC interview, ibid.</div>
+</div>
+
+<div class="obj-card r">
+<div class="obj-icon"><svg viewBox="0 0 100 60" fill="none"><rect x="30" y="14" width="8" height="30" rx="3" stroke="#ece6d5" stroke-width="1.4"/><path d="M38 14 L60 8 L60 16 L40 20" stroke="#ece6d5" stroke-width="1.4"/><path d="M42 16 L58 12" stroke="#e8a840" stroke-width="1"/></svg></div>
+<div class="obj-num">04 — Object</div>
+<div class="obj-name">The Toothbrush</div>
+<div class="obj-p">A recurring fixation with oral hygiene runs through <em>Where Is My DVD?</em>, noted specifically by festival programmers covering his early directorial work — a small, domestic, faintly absurd ritual object embedded inside a film otherwise structured around professional failure and recovered footage.<sup>[32]</sup></div>
+<div class="obj-cite">[32] London Korean Film Festival programme notes</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ══════════ S3: JANE ══════════ -->
+<div class="band"><span>Mask One — Jane, 2016</span><span class="fno">P.05</span></div>
+<section id="s3" class="spread">
+<div class="spread-inner">
+<div class="kicker r">First Documented Full-Instrument Rebuild</div>
+<h2 class="headline r">Minus ten kilograms.<br>A voice built <em>from scratch.</em></h2>
+<p class="body-txt r">In Cho Hyun-hoon's 2016 independent feature <em>Jane</em>, Koo played the title role, a transgender woman. Preparation is documented as involving an approximate 10kg reduction in body mass and the deliberate construction of a distinctive high-pitched vocal delivery specific to the part.<sup>[4]</sup> This is the earliest documented case in his filmography of altering the instrument's baseline parameters — mass, pitch — rather than layering affect on top of an unchanged one.</p>
+<p class="body-txt r">The important detail is not extremity by itself. Weight loss and vocal alteration can become empty trivia in actor profiles, the prestige language of sacrifice. Here they matter because they convert performance into a measurable discontinuity. The body carries a before and after. The voice carries a before and after. The role is not only interpreted; it leaves evidence of having passed through the actor's instrument.</p>
+<div class="factbox r">
+<div class="factbox-label">Recognition</div>
+<div class="factbox-row"><div class="factbox-k">Award</div><div class="factbox-v">Actor of the Year, Busan International Film Festival (2016)</div></div>
+<div class="factbox-row"><div class="factbox-k">Award</div><div class="factbox-v">Best New Actor, 54th Baeksang Arts Awards</div></div>
+<div class="factbox-row"><div class="factbox-k">Physical prep</div><div class="factbox-v">Reported ≈10kg mass reduction</div></div>
+<div class="factbox-row"><div class="factbox-k">Vocal prep</div><div class="factbox-v">Constructed high-pitched register, built specifically for the role</div></div>
+</div>
+<div class="cite r">[1] Wikipedia · [4] Wikipedia, Career section</div>
+</div>
+</section>
+
+<!-- ══════════ S4: PENINSULA ══════════ -->
+<div class="band"><span>Mask Two — Peninsula, 2020</span><span class="fno">P.06</span></div>
+<section id="s4" class="spread">
+<div class="spread-inner">
+<div class="kicker r">The Role a Director Didn't Want to Give Him</div>
+<h2 class="headline r">Cast against the director's<br>own initial judgment.</h2>
+<p class="body-txt r">Koo's first major commercial role was Captain Seo Sang-hoon in Yeon Sang-ho's <em>Peninsula</em> (2020). Yeon is documented as having initially doubted Koo's fit for mainstream commercial cinema, casting him only after a direct personal meeting.<sup>[1]</sup> The role as scripted carried the structural function of a conventional antagonist.</p>
+<div class="pullquote r">
+<div class="pullquote-text">Yeon Sang-ho is quoted saying Koo's interpretation "added complexity to a character that might otherwise have been a conventional villain."</div>
+<div class="pullquote-attr">Yeon Sang-ho, cited via Wikipedia [1]</div>
+</div>
+<p class="body-txt r">Audience commentary contemporaneous with release converges on a related but separate observation: viewers describe the character as memorable specifically because it registered as <em>irritating in a way that stuck</em>, unlike a flatter written villain.<sup>[5]</sup> Specificity of behavior, not likability, is the reported mechanism of the performance's retention.</p>
+<p class="body-txt r">This is the commercial version of the evidence problem. A conventional villain can vanish into function. He threatens, obstructs, dies, and the plot moves on. Koo's version appears to have worked against that vanishing by making the behavior abrasive enough to remain. Irritation becomes memory architecture. The viewer may reject the character and still be forced to register him.</p>
+<div class="cite r">[1] Wikipedia · [5] AsianWiki, user commentary archive</div>
+</div>
+</section>
+
+<!-- ══════════ S5: D.P. ══════════ -->
+<div class="band"><span>Mask Three — D.P., 2021–23</span><span class="fno">P.07</span></div>
+<section id="s5" class="spread">
+<div class="spread-inner wide">
+<div class="kicker r">Documented Tempo Differential Within a Three-Man Ensemble</div>
+<h2 class="headline r">Corporal Han Ho-yeol survives<br>the barracks through <em>speed,</em> not force.</h2>
+<p class="body-txt r">In Netflix's <em>D.P.</em> (2021–2023), Koo played Corporal Han Ho-yeol, senior partner to Private Ahn Jun-ho (Jung Hae-in), within a unit commanded by Sergeant First Class Park Beom-gu (Kim Sung-kyun).<sup>[6][7]</sup> Critical language consistently applies the term "eccentric" — a soldier who evades much of the barracks' systemic hazing through wit and rank rather than physical assertion, in documented contrast to Jun-ho's subdued affect.<sup>[7][8]</sup></p>
+<p class="body-txt r">The easy reading is comic relief. The better reading is pressure management. Ho-yeol's velocity does not remove the institution's violence; it creates a narrow corridor through it. The speed is not ornamental. It is the character's method for staying mobile inside a system that immobilizes everyone else.</p>
+<div class="editorial-grid r">
+<div class="ed-card">
+<div class="ed-card-label">Documented function</div>
+<div class="ed-card-title">A bounded comic register</div>
+<p class="ed-card-p">Reviews specifically note the comedy is calibrated with a ceiling — "not too over the top" — so the eccentricity never fully detaches from the show's stakes around systemic military abuse.<sup>[9]</sup></p>
+<div class="ed-card-cite">[9] Oppa Noona review</div>
+</div>
+<div class="ed-card">
+<div class="ed-card-label">Documented function</div>
+<div class="ed-card-title">Compassion beneath velocity</div>
+<p class="ed-card-p">He is documented as letting a deserter remain absent longer than required, so the man could raise money for his grandmother's hospital care — a quiet act embedded beneath a fast, playful surface.<sup>[9]</sup></p>
+<div class="ed-card-cite">[9] Oppa Noona, ibid.</div>
+</div>
+</div>
+<p class="body-txt r">That is why the compassion matters. The ethical act is not performed as a speech. It is embedded under misdirection, joke timing, and procedural momentum. The character does not become serious to become kind. He remains fast, and the kindness appears inside the speed. Evident acting, here, is not a face announcing depth. It is a behavioral contradiction that leaves a trace.</p>
+<div class="factbox r">
+<div class="factbox-label">Award record</div>
+<div class="factbox-row"><div class="factbox-k">2022</div><div class="factbox-v">Best New Actor, Television — 58th Baeksang Arts Awards</div></div>
+<div class="factbox-row"><div class="factbox-k">2021</div><div class="factbox-v">20th Director's Cut Awards</div></div>
+<div class="factbox-row"><div class="factbox-k">2021</div><div class="factbox-v">1st Blue Dragon Series Awards</div></div>
+</div>
+<div class="cite r">[6] AsianWiki · [7] DramaRambles review · [8] NamuWiki character cross-reference · [9] Oppa Noona · [10] NamuWiki awards</div>
+</div>
+</section>
+
+<!-- ══════════ S6: MOGADISHU ══════════ -->
+<div class="band"><span>Mask Four — Escape from Mogadishu, 2021</span><span class="fno">P.08</span></div>
+<section id="s6" class="spread">
+<div class="spread-inner">
+<div class="kicker r">The Register Rarely Documented in His Filmography</div>
+<h2 class="headline r">A performance built on<br><em>what he withholds.</em></h2>
+<p class="body-txt r">In Ryoo Seung-wan's <em>Escape from Mogadishu</em> (2021), Koo played Tae Joon-ki, a North Korean diplomat trapped alongside hostile South Korean counterparts during the 1991 collapse of the Somali government.<sup>[1][11]</sup> The film was South Korea's official submission for Best International Feature at the 94th Academy Awards.<sup>[11]</sup></p>
+<p class="body-txt r">This role sits outside the elevated-tempo pattern otherwise dominant in his work. Audience response isolates it specifically for restraint — tension generated by two state representatives in forced proximity, effect produced by suppressed rather than displayed affect.<sup>[5]</sup> A corroborating physical data point: Koo has stated he ran nearly every day during the Moroccan shoot, extending a personal habit from 5km to 7km daily.<sup>[3]</sup> The discipline off-camera runs parallel to, rather than in visible service of, the restraint on-camera.</p>
+<div class="pullquote r">
+<div class="pullquote-text">Restraint is not the absence of evidence. It is evidence by compression: the performance makes pressure legible by refusing the release the viewer expects.</div>
+</div>
+<p class="body-txt r">This matters because it prevents the essay from reducing Koo to speed. If the pattern were only acceleration, <em>Mogadishu</em> would be an exception. Instead it shows the same mechanism inverted. Presence is made evident not through excess, but through withheld excess. The pressure remains. The output changes.</p>
+<div class="cite r">[1] Wikipedia · [3] NamuWiki · [5] AsianWiki · [11] KOFIC, "KOO Kyohwan" profile</div>
+</div>
+</section>
+
+<!-- ══════════ S7: KILL BOKSOON ══════════ -->
+<div class="band"><span>Mask Five — Kill Boksoon, 2023</span><span class="fno">P.09</span></div>
+<section id="s7" class="spread">
+<div class="spread-inner">
+<div class="kicker r">Ensemble Register, Included for Completeness</div>
+<h2 class="headline r">Han Hui-seong — a <em>supporting</em> data point.</h2>
+<p class="body-txt r">In Byun Sung-hyun's <em>Kill Boksoon</em> (2023), Koo played Han Hui-seong within an ensemble around Jeon Do-yeon's title character, a contract killer inside a corporate assassination guild.<sup>[12]</sup> Public reception specifically registers the character as underused relative to Koo's established range, with fan commentary explicitly requesting expanded material for him in future work.<sup>[14b]</sup></p>
+<p class="body-txt r">This section stays short by design, but it should not be dismissed. Underuse is useful evidence because it exposes the audience's expectation: the part is small, yet viewers still register a gap between the amount of screen time available and the amount of behavioral charge they expect from him. The negative space becomes part of the pattern. A restrained or underwritten role still produces demand for more evidence.</p>
+<div class="cite r">[12] Rotten Tomatoes filmography · [14b] AsianWiki commentary archive</div>
+</div>
+</section>
+
+<!-- ══════════ S8: PARASYTE ══════════ -->
+<div class="band"><span>Mask Six — Parasyte: The Grey, 2024</span><span class="fno">P.10</span></div>
+<section id="s8" class="spread">
+<div class="spread-inner wide">
+<div class="kicker r">Self-Reported Tempo Ratios, Quoted Directly</div>
+<h2 class="headline r">"I thought <em>I hit</em> the fast-forward button."</h2>
+<p class="body-txt r">In Netflix's <em>Parasyte: The Grey</em> (2024), Koo played Seol Kang-woo, searching for a missing sister while allied with a woman partially colonized by a parasitic organism.<sup>[15][16]</sup> In a KOFIC interview he self-reported the character's tempo in explicit comparative terms: <em>"Kang-woo moves twice as fast as the sluggish or deliberate parasites... and speaks almost three times faster."</em><sup>[16]</sup> He stated the dialogue rhythm was not deliberate line-by-line — the tempo is structural — and that "the only weighty aspect about Kang-woo is perhaps his beard."<sup>[16]</sup></p>
+<p class="body-txt r">This is the cleanest statement of the essay's mechanism because Koo names the tempo as architecture rather than decoration. Kang-woo does not merely have fast lines. His speed is relational: faster than the parasites, faster than deliberation, faster than grief can settle into a conventional scene. The tempo turns the character into a moving proof of imbalance.</p>
+<div class="editorial-grid r">
+<div class="ed-card">
+<div class="ed-card-label">Self-reported</div>
+<div class="ed-card-title">The flourish, added on set</div>
+<p class="ed-card-p">A small showboating gesture after every action beat, because Kang-woo is "deeply immersed in his own charm" and a clean exit would be anticlimactic to him.<sup>[16]</sup></p>
+</div>
+<div class="ed-card">
+<div class="ed-card-label">Critical reception</div>
+<div class="ed-card-title">Likable without moral softening</div>
+<p class="ed-card-p">Reviewers noted the character is "not written as the criminal with a good heart" — sympathy comes from a demonstrated, incremental willingness to reconsider self-interest.<sup>[14]</sup></p>
+</div>
+</div>
+<div class="pullquote r">
+<div class="pullquote-text">In the finale, he weeps at the death of a figure he "secretly cherished," then moves immediately into further rescue action with no depicted grieving interval — the same structural beat already visible in Han Ho-yeol: elevated tempo as the visible output, low-visibility compassion as the constant underneath it.</div>
+<div class="pullquote-attr">Sourced pattern — KOFIC [16]</div>
+</div>
+<p class="body-txt r">The beard joke is more than a joke because it names the role's gravity budget. Everything else is kinetic, unserious, evasive, or over-bright. One physical marker is asked to carry weight on behalf of the whole unstable system. Evident acting often works exactly like that: a visible remainder takes responsibility for an otherwise uncontained performance.</p>
+<div class="cite r">[14] Opinyuns review · [15] Wikipedia, "Parasyte: The Grey" · [16] KOFIC interview</div>
+</div>
+</section>
+
+<!-- ══════════ S9: WE ARE ALL TRYING HERE ══════════ -->
+<div class="band"><span>Mask Seven — We Are All Trying Here, 2026</span><span class="fno">P.11</span></div>
+<section id="s9" class="spread">
+<div class="spread-inner wide">
+<div class="kicker r">JTBC / Netflix — Written by Park Hae-young (My Mister, My Liberation Notes)</div>
+<h2 class="headline r">A man who talks constantly<br>because he fears he might <em>disappear</em> if he stops.</h2>
+<p class="body-txt r">In the 2026 JTBC series <em>We Are All Trying Here</em> (모두가 자신의 무가치함과 싸우고 있다, literally "Everyone Is Fighting Against Their Own Worthlessness"), Koo plays Hwang Dong-man, an aspiring director who has not made his feature debut in twenty years while every other member of his university film-club friend group, "The Eight," has gone on to visible success.<sup>[42][43]</sup> Coverage of the premiere episode singles out a specific characterization detail: Dong-man is written as feeling he might disappear if he stopped talking — his constant, conversation-dominating chatter is framed on-screen not as charisma but as a defense against erasure.<sup>[43]</sup></p>
+<div class="factbox r">
+<div class="factbox-label">Character mechanics</div>
+<div class="factbox-row"><div class="factbox-k">Premise</div><div class="factbox-v">Only undebuted member of a successful filmmaking friend group, after 20 years</div></div>
+<div class="factbox-row"><div class="factbox-k">Behavior</div><div class="factbox-v">Overcompensates by dominating conversation and issuing harsh critique of others</div></div>
+<div class="factbox-row"><div class="factbox-k">Stated fear</div><div class="factbox-v">"He might disappear if he stopped talking" — Episode 1<sup>[43]</sup></div></div>
+<div class="factbox-row"><div class="factbox-k">Production framing</div><div class="factbox-v">Described by the production team as combining "complex layers of deficiency and fiery energy"<sup>[44]</sup></div></div>
+</div>
+<p class="body-txt r">In post-finale interview, Koo described his own relationship to the character in restrained terms: reading unfamiliar viewers' reviews of Dong-man, he said, made him realize <em>"a part of me exists there too,"</em> closing his reflection on the show's theme of shared worthlessness with the line <em>"All for One, One for All."</em><sup>[16b]</sup> Taken together with the tempo pattern already documented in Han Ho-yeol and Kang-woo, Dong-man extends the same structural logic one step further: here, the talking itself — not a side effect of the character, but its central survival mechanism — is what keeps the character present at all.</p>
+<p class="body-txt r">This is the point where the essay's hidden subject becomes explicit. Dong-man does not speak because he has something efficient to say. He speaks because silence would confirm the fear that the world can proceed without registering him. The undebuted director is a perfect late-form Koo figure: an artist with twenty years of intention and insufficient public proof. He does not lack interior life. He lacks evidence that the exterior world accepts as binding.</p>
+<div class="cite r">[16b] Korea Herald, cast interview on series finale · [42] Wikipedia, "We Are All Trying Here" · [43] AsianWiki, episode notes and premise · [44] MyDramaList News, production statement</div>
+</div>
+</section>
+
+<!-- ══════════ S10: EVIDENT ACTING ══════════ -->
+<div class="band"><span>So He Won't Disappear</span><span class="fno">P.12</span></div>
+<section id="s10" class="spread">
+<div class="spread-inner wide">
+<div class="kicker r">The Term</div>
+<h2 class="headline r">Not method acting.<br>Not transformation porn.<br><em>Evidence production.</em></h2>
+<p class="body-txt r">The usual vocabulary around actors is too blunt for this case. "Chameleon" makes transformation sound frictionless. "Method" turns every bodily alteration into mythology. "Eccentric" treats behavioral specificity as personality color. None of these words are precise enough for the pattern visible here.</p>
+<p class="body-txt r">Evident acting names a narrower mechanism: the performance does not ask to be believed only as illusion. It leaves a constructed residue the viewer can point to. The residue may be physical, as in <em>Jane</em>. It may be rhythmic, as in <em>D.P.</em> and <em>Parasyte: The Grey</em>. It may be archival, as in <em>Where Is My DVD?</em>. It may be negative, as in <em>Escape from Mogadishu</em>, where the evidence is pressure held back rather than discharged.</p>
+<div class="editorial-grid r">
+<div class="ed-card">
+<div class="ed-card-label">Against "chameleon"</div>
+<div class="ed-card-title">Transformation is not the point</div>
+<p class="ed-card-p">A chameleon metaphor emphasizes disappearance into the role. Koo's pattern often does the opposite: the role remains visibly engineered, with a changed body, altered voice, accelerated rhythm, object, or behavioral excess left on the surface.</p>
+</div>
+<div class="ed-card">
+<div class="ed-card-label">Against "quirky"</div>
+<div class="ed-card-title">Eccentricity is an output</div>
+<p class="ed-card-p">Calling the performances quirky stops at texture. The useful question is what the texture does. Across these cases, it makes otherwise unstable presence hard to miss.</p>
+</div>
+<div class="ed-card">
+<div class="ed-card-label">Against "method"</div>
+<div class="ed-card-title">Sacrifice is not enough</div>
+<p class="ed-card-p">The interesting part is not that preparation happened. The interesting part is that preparation becomes readable as structure inside the finished work: pitch, speed, restraint, irritation, or object logic.</p>
+</div>
+<div class="ed-card">
+<div class="ed-card-label">For "evident"</div>
+<div class="ed-card-title">Presence must leave a trace</div>
+<p class="ed-card-p">The performances keep converting interior pressure into external registration. They behave as if being felt is insufficient unless something remains.</p>
+</div>
+</div>
+<div class="pullquote r">
+<div class="pullquote-text">The repeated question is not "how does he become someone else?" It is "what must the performance leave behind so that someone cannot say it never happened?"</div>
+</div>
+<p class="body-txt r">This also explains why the objects matter. The DVD is not nostalgia. It is proof storage. The motorcycle is not transportation. It is a platform for excess gesture. The beard is not styling. It is concentrated gravity. The toothbrush is not domestic detail. It is ritual residue inside a story about professional failure. The object index is therefore not a sidebar to the essay. It is the essay in miniature.</p>
+</div>
+</section>
+
+<!-- ══════════ SYNTHESIS ══════════ -->
+<div class="band"><span>Synthesis</span><span class="fno">P.13</span></div>
+<section id="bib-lead" class="spread" style="background:var(--paper3)">
+<div class="spread-inner">
+<div class="kicker r">Reading the Pattern Across Roles</div>
+<h2 class="headline r">The mask is never a costume.<br>It is a <em>registration device,</em><br>worn temporarily.</h2>
+<p class="body-txt r">Across the documented roles and directorial work examined here — Go Gi-hwan, the title role in <em>Jane</em>, Captain Seo Sang-hoon, Corporal Han Ho-yeol, Tae Joon-ki, Han Hui-seong, Seol Kang-woo, and Hwang Dong-man — a consistent procedural pattern holds across the cited sources: baseline parameters of mass, pitch, tempo, restraint, or object relation are rebuilt at the level of the instrument, rather than performed as affect layered onto an unchanged one.<sup>[4][16]</sup></p>
+<div class="pullquote r">
+<div class="pullquote-text">The most defensible recurring variable is not eccentricity itself, but anti-disappearance: a reflex by which the character produces evidence faster than the story can erase him.</div>
+</div>
+<p class="body-txt r">Ho-yeol jokes and moves quickly, but the ethical act remains underneath. Kang-woo accelerates through danger and grief, but the beard is left to carry weight. Dong-man talks because silence threatens disappearance. Go Gi-hwan searches for a DVD because an unrecovered performance has the status of a missing body. Jane leaves evidence through physical and vocal reconstruction. Mogadishu proves the same structure by inversion: withheld pressure, still legible.</p>
+<p class="body-txt r">This is why the title has to change. "The Tempo Problem" described one symptom. <em>So He Won't Disappear</em> names the wound underneath it. Evident acting names the mechanism. The work keeps asking how a person becomes undeniable without becoming stable. The answer, again and again, is not essence. It is trace.</p>
+<p class="body-txt r">This does not extend into a claim about Koo's internal state. The evidence supports a documented behavioral and performative regularity, sourced to interview, credited filmography, and independent critical reception — nothing further. The point is not to solve the person behind the work. The point is to notice the work's repeated solution to disappearance: alter the instrument, accelerate the rhythm, recover the object, leave the proof.</p>
+</div>
+</section>
+
+<!-- ══════════ COLOPHON / BIBLIOGRAPHY ══════════ -->
+<section id="bib">
+<div class="bib-inner">
+<h2 class="bib-h r">References</h2>
+<div class="bib-sub r">All biographical, filmographic, and critical claims sourced. No invented quotations. No fabricated statistics.</div>
+<div class="bib-list r">
+<div class="bib-item"><span class="n">[1]</span> Wikipedia contributors. <em>"Koo Kyo-hwan."</em> Wikipedia, The Free Encyclopedia.</div>
+<div class="bib-item"><span class="n">[2]</span> Grokipedia. <em>"Koo Kyo-hwan."</em> Profile and public persona section.</div>
+<div class="bib-item"><span class="n">[3]</span> NamuWiki contributors. <em>"구교환" (Koo Kyo-hwan).</em> en.namu.wiki.</div>
+<div class="bib-item"><span class="n">[4]</span> Wikipedia contributors, "Koo Kyo-hwan," Career section — Jane (2016) preparation and awards.</div>
+<div class="bib-item"><span class="n">[5]</span> AsianWiki. <em>"Koo Kyo-Hwan."</em> User commentary archive.</div>
+<div class="bib-item"><span class="n">[6]</span> AsianWiki. <em>"D.P. Season 2."</em> Cast and character summary.</div>
+<div class="bib-item"><span class="n">[7]</span> DramaRambles. <em>"D.P. (2021) || Drama Review (spoilers)."</em></div>
+<div class="bib-item"><span class="n">[8]</span> NamuWiki contributors. <em>"박범구(D.P.)"</em></div>
+<div class="bib-item"><span class="n">[9]</span> Oppa Noona. <em>"K Drama Review: D.P. (2021)."</em></div>
+<div class="bib-item"><span class="n">[10]</span> NamuWiki contributors, "구교환," Awards section.</div>
+<div class="bib-item"><span class="n">[11]</span> Korean Film Council (KOFIC). <em>"KOO Kyohwan."</em> Actor profile and filmography.</div>
+<div class="bib-item"><span class="n">[12]</span> Rotten Tomatoes. <em>"Koo Kyo-hwan."</em> Filmography listing.</div>
+<div class="bib-item"><span class="n">[14]</span> Opinyuns. <em>"K-drama Review: Parasyte: The Grey."</em></div>
+<div class="bib-item"><span class="n">[14b]</span> AsianWiki. Commentary archive, Kill Boksoon reception.</div>
+<div class="bib-item"><span class="n">[15]</span> Wikipedia contributors. <em>"Parasyte: The Grey."</em></div>
+<div class="bib-item"><span class="n">[16]</span> Korean Film Council (KOFIC). <em>"Actor Koo Kyo-hwan in Parasyte: The Grey."</em> Interview.</div>
+<div class="bib-item"><span class="n">[16b]</span> Korea Herald. <em>"'We Are All Trying Here' cast reflects on worthlessness."</em> (2026).</div>
+<div class="bib-item"><span class="n">[32]</span> London Korean Film Festival. <em>"Yi Ok-seop and Koo Kyo-hwan: Three short films."</em></div>
+<div class="bib-item"><span class="n">[33]</span> Korean Film Council (KOFIC). Directorial filmography and awards.</div>
+<div class="bib-item"><span class="n">[34]</span> Grokipedia. Directorial projects catalog.</div>
+<div class="bib-item"><span class="n">[37]</span> Korean Film Council (KOFIC). <em>"Where Is My DVD? (2013)."</em> Credits and synopsis.</div>
+<div class="bib-item"><span class="n">[40]</span> KDramaStars. <em>"Goo Kyo Hwan Relationship."</em> (2022).</div>
+<div class="bib-item"><span class="n">[41]</span> Letterboxd. <em>"Where is my DVD? (2013)."</em> Credits archive.</div>
+<div class="bib-item"><span class="n">[42]</span> Wikipedia contributors. <em>"We Are All Trying Here."</em></div>
+<div class="bib-item"><span class="n">[43]</span> AsianWiki. <em>"We Are All Trying Here."</em> Episode notes and premise.</div>
+<div class="bib-item"><span class="n">[44]</span> MyDramaList News. <em>"Koo Kyo Hwan to stop at nothing to prove his worth."</em> (2026).</div>
+</div>
+</div>
+</section>
+
+<script>
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(scrollY/(h.scrollHeight-h.clientHeight)*100)+'%'},{passive:true});
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')})},{threshold:.08});
+document.querySelectorAll('.r,.rf').forEach(el=>obs.observe(el));
+const sections=document.querySelectorAll('section[id]');
+const dots=document.querySelectorAll('.nd');
+const sObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){dots.forEach(d=>d.classList.toggle('on',d.dataset.s===e.target.id))}})},{threshold:.3});
+sections.forEach(s=>sObs.observe(s));
+dots.forEach(d=>d.addEventListener('click',()=>document.getElementById(d.dataset.s)?.scrollIntoView({behavior:'smooth'})));
+</script>
+</body>
+</html>

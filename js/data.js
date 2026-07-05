@@ -239,6 +239,12 @@ const portfolioData = {
     ],
     posts: [
         {
+            title: "So He Won't Disappear",
+            date: "July 6, 2026",
+            summary: "An essay on Koo Kyo-hwan, evident acting, and performance as proof. Reading Jane, D.P., Parasyte: The Grey, We Are All Trying Here, and his directorial objects through anti-disappearance, tempo, and the need to leave a trace.",
+            link: "Koo-Kyu-Hwan.html"
+        },
+        {
             title: "Infinity Is Not Constant",
             date: "June 23, 2026",
             summary: "A post-Cantorian structural essay on why one word governs too many territories and rules none of them accurately. Mathematics, theology, physics, computation, language, desire, attention, science, and selfhood are separated into distinct forms of unboundedness.",
