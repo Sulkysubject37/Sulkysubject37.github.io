@@ -3,89 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SULKY_OS // v3.0 // The Entangled Kernel</title>
-    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:wght@900&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=3.0.5">
+    <title>MD. Arshad (SulkySubject37) // Portfolio</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Instrument+Sans:wght@300;400;500&family=JetBrains+Mono:wght@100;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Randomizer Logic for Theme and Layout -->
+    <script>
+        const themes = ['oat', 'matcha', 'rose', 'slate', 'sand', 'midnight', 'plum', 'sage', 'sepia', 'abyss'];
+        const layouts = ['layout-a', 'layout-b', 'layout-c'];
+        
+        const lastTheme = localStorage.getItem('last_portfolio_theme');
+        const lastLayout = localStorage.getItem('last_portfolio_layout');
+        
+        let availThemes = themes.filter(t => t !== lastTheme);
+        if(availThemes.length === 0) availThemes = themes;
+        
+        let availLayouts = layouts.filter(l => l !== lastLayout);
+        if(availLayouts.length === 0) availLayouts = layouts;
+        
+        const newTheme = availThemes[Math.floor(Math.random() * availThemes.length)];
+        const newLayout = availLayouts[Math.floor(Math.random() * availLayouts.length)];
+        
+        localStorage.setItem('last_portfolio_theme', newTheme);
+        localStorage.setItem('last_portfolio_layout', newLayout);
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        document.documentElement.setAttribute('data-layout', newLayout);
+    </script>
 </head>
 <body>
 
-    <div id="graph-container">
-        <canvas id="graph-canvas"></canvas>
-    </div>
-
-    <div class="kernel-layout">
-        
-        <aside class="registry">
-            <div class="registry-header">~/REGISTRY</div>
-            <nav class="nav-tree" id="registry-nav">
-                <div class="nav-item active" data-target="profile">0x00 // PROFILE.man</div>
-                <div class="nav-item" data-target="projects">0x01 // PROJECTS.bin</div>
-                <div class="nav-item" data-target="experience">0x02 // EXPERIENCE.log</div>
-                <div class="nav-item" data-target="education">0x03 // EDUCATION.edu</div>
-                <div class="nav-item" data-target="skills">0x04 // SKILLS.sys</div>
-                <div class="nav-item" data-target="blog">0x05 // BLOG.log</div>
-                <div class="nav-item" data-target="publications">0x06 // PUBLICATIONS.bib</div>
-                <div class="nav-item" data-target="contact">0x07 // CONTACT.sh</div>
-                <div class="nav-item" data-target="network">0x08 // NETWORK.gml</div>
-                <div class="nav-item" data-target="terminal">0x09 // TERMINAL.sh</div>
-                </nav>
-
-                <div class="mode-control">
-                <button id="mode-toggle" class="mode-btn">[ SHIFT_TO_CRUEL ]</button>
-                </div>
-
-                <div class="system-status">
-                <div class="status-row">
-                    <span class="label">KERNEL</span>
-                    <span class="val">v3.0.5_STABLE</span>
-                </div>
-                <div class="status-row">
-                    <span class="label">UPTIME</span>
-                    <span class="val" id="uptime-clock">00:00:00</span>
-                </div>
-                </div>
-        </aside>
-
-        <main class="viewport">
-            <div class="viewport-header">
-                <span id="active-path">~/profile.man</span>
-                <span class="window-controls">[ 0x37 ]</span>
-            </div>
-            <div id="text-surface">
-                <!-- ALL CONTENT IS RENDERED LINE-BY-LINE VIA JS -->
-            </div>
-        </main>
-
-        <footer class="telemetry">
-            <div class="log-stream" id="log-feed">
-                <div class="log-entry">
-                    <span class="log-ts">[00:00:01]</span>
-                    <span class="log-msg">KERNEL_BOOT_SUCCESS</span>
-                </div>
-            </div>
-            <div class="coord-display" id="coord-telemetry">X: 000 | Y: 000</div>
-        </footer>
-
-    </div>
-
+    <!-- Reimagined Elegant Boot Sequence -->
     <div id="boot-overlay">
         <div class="boot-content">
-            <pre class="boot-ascii">
-   _____ _    _ _      _  ____     __   ____   _____ 
-  / ____| |  | | |    | |/ /\ \   / /  / __ \ / ____|
- | (___ | |  | | |    | ' /  \ \_/ /  | |  | | (___  
-  \___ \| |  | | |    |  &lt;    \   /   | |  | |\___ \ 
-  ____) | |__| | |____| . \    | |    | |__| |____) |
- |_____/ \____/|______|_|\_\   |_|     \____/|_____/ 
-            </pre>
-            <div class="boot-bar-container"><div class="boot-bar" id="boot-progress"></div></div>
-            <div id="boot-log" style="font-family: 'IBM Plex Mono'; font-size: 10px; color: #888;"></div>
+            <div class="boot-text" id="boot-text">The Cruel Standard.</div>
+            <div class="boot-subtext" id="boot-subtext">Compiling context...</div>
         </div>
     </div>
 
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Fluid Background (shared across layouts) -->
+    <div id="fluid-bg"></div>
+
+    <!-- Main App Container -->
+    <div id="app">
+        <!-- Content will be injected here by script.js -->
+    </div>
+
     <script src="js/data.js"></script>
-    <script src="js/pretext-shim.js"></script>
-    <script src="js/script.js?v=3.0.5"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

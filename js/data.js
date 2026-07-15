@@ -1,9 +1,9 @@
 const portfolioData = {
     about: {
         name: "MD. Arshad",
-        title: "Research Software Engineer | Systems Biologist | AI Engineer | Bioinformatician",
-        bio: "Innovative Research Software Engineer and Systems Biologist bridging the gap between high-performance systems programming (C++) and statistical biology (R). I build rigorous, reproducible, and scalable solutions under the 'Cruel Standard': systems must fail loudly and safely rather than hallucinate or mislead. Experienced in building explainable deep learning frameworks, de novo assemblers, and graph neural networks for biological interpretation.",
-        cruelBio: "KERNEL PANIC IF HALLUCINATION DETECTED. I refuse to write 'AI for Good' fluff. I write C++20 because Python is too slow for 100M+ edges, and I write R because biologists refuse to learn anything else. My code asserts aggressively. If your data is garbage, my software will crash and tell you exactly why, rather than giving you a pretty p-value. Currently burning GPU cycles training LLMs to say 'I don't know' instead of lying.",
+        title: "Research Software Engineer | Systems Biologist | Creator & Curator at BioZig Software Foundation",
+        bio: "Innovative Research Software Engineer and Systems Biologist bridging the gap between high-performance systems programming and deterministic biology (Zig). I build rigorous, reproducible, and scalable solutions under the 'Cruel Standard': systems must fail loudly and safely rather than hallucinate or mislead. Experienced in building explainable deep learning frameworks, de novo assemblers, and graph neural networks for biological interpretation.",
+        cruelBio: "KERNEL PANIC IF HALLUCINATION DETECTED. I refuse to write 'AI for Good' fluff. I write Zig because Python is too slow for 100M+ edges. My code asserts aggressively. If your data is garbage, my software will crash and tell you exactly why, rather than giving you a pretty p-value. Currently burning GPU cycles training LLMs to say 'I don't know' instead of lying.",
         location: "New Delhi, India",
         email: "arshad10867c@gmail.com",
         social: {
@@ -28,6 +28,12 @@ const portfolioData = {
         }
     ],
     experience: [
+        {
+            role: "Creator & Curator",
+            company: "BioZig Software Foundation",
+            duration: "2026–Present",
+            description: "Architecting deterministic, zero-dependency biological infrastructure in Zig. Enforcing the 'Cruel Standard' to eradicate hallucination and memory-fragmentation in genomic pipelines."
+        },
         {
             role: "Research Software Engineer",
             company: "Independent",
@@ -238,6 +244,12 @@ const portfolioData = {
         "Systems Programming", "Network Biology", "Quantum Computing", "Algorithmic Rigor", "Open Source"
     ],
     posts: [
+        {
+            title: "Requiem for Efficiency",
+            date: "July 14, 2026",
+            summary: "Every gain in efficiency is consumed by more use, not less. This is Jevons' paradox, and it is real. But the rebound itself has a ceiling — past which greater efficiency stops producing more knowledge and starts producing only noise. Structured as a Mass for the dead.",
+            link: "Requiem-For-Efficiency.html"
+        },
         {
             title: "So He Won't Disappear",
             date: "July 6, 2026",
