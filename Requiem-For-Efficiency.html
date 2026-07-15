@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Requiem for Efficiency — The Saturation of the Jevons Effect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=UnifrakturMaguntia&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0a0908;color:#e6e0d0;font-family:'Cormorant Garamond',Georgia,serif;overflow-x:hidden;line-height:1;cursor:default}
+
+:root{
+  --black:#0a0908;--black2:#100e0c;--black3:#171310;
+  --candle:#c99a3f;--candle2:#e0b660;--candle-dim:rgba(201,154,63,.14);
+  --blood:#7a1520;--blood2:#5c0f18;--blood-dim:rgba(122,21,32,.14);
+  --parch:#ece4cf;--parch2:#e0d5b8;--parch-txt:#1c1710;
+  --silver:#b0a99a;--dim:#6e685c;--line:rgba(216,210,196,.14);
+  --gold:'Cinzel',serif;--frak:'UnifrakturMaguntia',cursive;
+  --serif:'Cormorant Garamond',Georgia,serif;--mono:'JetBrains Mono',monospace;
+}
+#prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:9000;background:linear-gradient(to right,var(--blood),var(--candle));transition:width .07s linear;box-shadow:0 0 8px rgba(201,154,63,.3)}
+.r{opacity:0;transform:translateY(20px);transition:opacity .95s ease,transform .95s ease}
+.r.on{opacity:1;transform:none}
+.rf{opacity:0;transition:opacity 1.6s ease}
+.rf.on{opacity:1}
+
+#nav{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:8000;display:flex;flex-direction:column;gap:7px}
+.nd{width:3px;height:3px;border-radius:1px;background:rgba(216,210,196,.22);border:none;cursor:pointer;padding:0;transition:.3s}
+.nd.on{background:var(--candle);height:16px;box-shadow:0 0 6px rgba(201,154,63,.5)}
+@media(max-width:600px){#nav{display:none}}
+
+/* movement band — sticky liturgical register */
+.mvt-band{
+  padding:.6rem clamp(20px,5vw,90px);
+  background:var(--black2);border-top:2px solid var(--candle);border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:100;
+}
+.mvt-part{font-family:var(--gold);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(224,182,96,.75)}
+.mvt-latin{font-family:var(--gold);font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(216,210,196,.78)}
+
+/* generic dark movement wrapper */
+.mvt{padding:80px clamp(20px,6vw,90px);position:relative}
+.mvt-inner{max-width:820px;margin:0 auto}
+.mvt-inner.wide{max-width:1040px}
+.mvt-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#8a8474;margin-bottom:1.6rem;display:flex;align-items:center;gap:14px}
+.mvt-eyebrow::before{content:'';width:24px;height:1px;background:var(--dim)}
+.mvt-latin-title{font-family:var(--gold);font-weight:700;font-size:clamp(11px,1.6vw,14px);letter-spacing:.3em;text-transform:uppercase;color:var(--candle);margin-bottom:.6rem}
+.mvt-h{font-family:var(--gold);font-weight:900;font-size:clamp(26px,4.4vw,50px);line-height:1.05;letter-spacing:-.005em;color:var(--parch);margin-bottom:1.5rem}
+.mvt-h em{font-style:normal;color:var(--blood2);text-shadow:0 0 20px rgba(122,21,32,.3)}
+.mvt-h .gold-w{color:var(--candle2)}
+.mvt-p{font-size:18px;line-height:1.92;color:rgba(216,210,196,.86);font-weight:300;margin-bottom:1.4rem;max-width:680px}
+.mvt-p em{font-style:italic;color:var(--parch)}
+.mvt-p b{font-weight:600;color:var(--candle2)}
+.mvt-cite{font-family:var(--mono);font-size:9.5px;color:#8a8474;border-left:2px solid var(--line);padding-left:.9rem;margin:1.2rem 0;line-height:1.85}
+
+/* Merton callout box — the unintended-consequence mechanism */
+.merton-box{border:1px solid rgba(122,21,32,.25);background:var(--blood-dim);padding:1.6rem 2rem;margin:2rem 0}
+.merton-label{font-family:var(--gold);font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--blood2);opacity:.9;margin-bottom:.9rem}
+.merton-flow{font-family:var(--mono);font-size:12.5px;color:rgba(216,210,196,.78);line-height:2.1}
+.merton-flow .planned{color:var(--candle2)}
+.merton-flow .actual{color:#c85050}
+.merton-note{font-size:15.5px;font-style:italic;color:rgba(216,210,196,.9);margin-top:1rem;line-height:1.75}
+
+/* quartet layout — 4 columns for solo movements */
+.quartet{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);margin:2rem 0}
+@media(max-width:820px){.quartet{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.quartet{grid-template-columns:1fr}}
+.voice{padding:1.5rem 1.3rem;border-right:1px solid var(--line)}
+.voice:last-child{border-right:none}
+@media(max-width:820px){.voice:nth-child(2n){border-right:none}}
+.voice-part{font-family:var(--gold);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--candle);margin-bottom:.5rem}
+.voice-name{font-family:var(--gold);font-weight:700;font-size:15px;color:var(--parch);margin-bottom:.7rem;letter-spacing:.02em}
+.voice-p{font-size:13px;line-height:1.7;color:rgba(216,210,196,.78)}
+.voice-p em{font-style:italic;color:rgba(216,210,196,.95)}
+
+/* chorus block — full-width dramatic statement */
+.chorus{background:var(--black3);border-top:2px solid var(--blood);border-bottom:2px solid var(--blood);padding:2.2rem 2.4rem;margin:2.2rem 0}
+.chorus-text{font-family:var(--gold);font-weight:500;font-style:normal;font-size:clamp(18px,2.6vw,25px);line-height:1.5;color:var(--parch)}
+.chorus-attr{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#8a8474;margin-top:.9rem}
+
+/* data readout */
+.readout{border:1px solid var(--line);margin:1.8rem 0}
+.readout-row{display:grid;grid-template-columns:180px 1fr;border-bottom:1px solid var(--line)}
+.readout-row:last-child{border-bottom:none}
+.readout-k{padding:.65rem 1rem;color:var(--candle2);letter-spacing:.08em;text-transform:uppercase;font-size:9px;border-right:1px solid var(--line);background:rgba(201,154,63,.03);font-family:var(--mono)}
+.readout-v{padding:.65rem 1rem;color:rgba(216,210,196,.82);line-height:1.6;font-size:13px}
+
+/* fugue-style two-voice display for Kyrie */
+.fugue{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);margin:2rem 0}
+@media(max-width:660px){.fugue{grid-template-columns:1fr}}
+.fugue-voice{padding:1.8rem}
+.fugue-voice.subject{border-right:1px solid var(--line);background:rgba(201,154,63,.03)}
+@media(max-width:660px){.fugue-voice.subject{border-right:none;border-bottom:1px solid var(--line)}}
+.fugue-label{font-family:var(--gold);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--candle);margin-bottom:.7rem}
+.fugue-name{font-family:var(--gold);font-weight:700;font-size:17px;color:var(--parch);margin-bottom:.7rem}
+.fugue-p{font-size:14px;line-height:1.75;color:rgba(216,210,196,.78)}
+.fugue-p em{font-style:italic;color:rgba(216,210,196,.95)}
+.fugue-cite{font-family:var(--mono);font-size:9px;color:#8a8474;margin-top:.6rem;line-height:1.6}
+
+/* parchment (light) section — for Sanctus/Benedictus, the "original synthesis" movements */
+.parchment{background:var(--parch);color:var(--parch-txt)}
+.parchment .mvt-latin-title{color:var(--blood2)}
+.parchment .mvt-h{color:var(--parch-txt)}
+.parchment .mvt-h em{color:var(--blood2);text-shadow:none}
+.parchment .mvt-p{color:rgba(28,23,16,.72)}
+.parchment .mvt-p em{color:var(--parch-txt)}
+.parchment .mvt-eyebrow{color:rgba(28,23,16,.35)}
+.parchment .mvt-eyebrow::before{background:rgba(28,23,16,.3)}
+.parchment .mvt-cite{color:rgba(28,23,16,.35);border-left-color:rgba(28,23,16,.15)}
+.parchment .readout{border-color:rgba(28,23,16,.15)}
+.parchment .readout-row{border-color:rgba(28,23,16,.1)}
+.parchment .readout-k{border-color:rgba(28,23,16,.1);background:rgba(122,21,32,.04);color:var(--blood2)}
+.parchment .readout-v{color:rgba(28,23,16,.68)}
+.parchment .merton-box{border-color:rgba(122,21,32,.2);background:rgba(122,21,32,.05)}
+.parchment .merton-flow{color:rgba(28,23,16,.6)}
+.parchment .merton-note{color:rgba(28,23,16,.7)}
+
+/* cover */
+#cover{min-height:100vh;background:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px;position:relative;overflow:hidden}
+#cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,154,63,.08) 0%,transparent 55%),radial-gradient(ellipse at 50% 90%,rgba(122,21,32,.1) 0%,transparent 50%);pointer-events:none}
+.cover-eyebrow{font-family:var(--gold);font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:rgba(201,154,63,.55);margin-bottom:2rem;position:relative;z-index:1}
+.cover-title{font-family:var(--frak);font-size:clamp(48px,9vw,110px);line-height:1;color:var(--parch);position:relative;z-index:1;text-shadow:0 0 40px rgba(201,154,63,.15)}
+.cover-sub{font-family:var(--gold);font-weight:400;font-size:clamp(14px,2vw,19px);letter-spacing:.08em;color:rgba(201,154,63,.6);margin-top:1.4rem;position:relative;z-index:1}
+.cover-thesis{font-size:clamp(15px,1.9vw,18px);font-style:italic;color:rgba(216,210,196,.75);max-width:560px;margin:2rem auto 0;line-height:1.8;position:relative;z-index:1}
+.cover-mvts{margin-top:2.8rem;font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:#9a9484;text-transform:uppercase;line-height:2.4;position:relative;z-index:1}
+.cover-scroll{position:absolute;bottom:26px;font-family:var(--mono);font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);animation:blink 3s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* bibliography */
+#bib{background:var(--black2);padding:76px clamp(20px,6vw,90px);border-top:2px solid var(--candle)}
+.bib-inner{max-width:900px;margin:0 auto}
+.bib-h{font-family:var(--gold);font-weight:900;font-size:clamp(22px,3.4vw,36px);color:var(--parch);margin-bottom:.5rem}
+.bib-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#8a8474;margin-bottom:2.2rem}
+.bib-list{display:flex;flex-direction:column;gap:.75rem}
+.bib-item{font-family:var(--mono);font-size:11px;line-height:1.65;color:rgba(216,210,196,.68);padding-left:1.4rem;text-indent:-1.4rem}
+.bib-item .n{color:var(--candle2);font-weight:500}
+.bib-item em{font-style:italic;color:rgba(216,210,196,.88)}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav id="nav">
+  <button class="nd on" data-s="cover"></button>
+  <button class="nd" data-s="m1"></button>
+  <button class="nd" data-s="m2"></button>
+  <button class="nd" data-s="m3"></button>
+  <button class="nd" data-s="m4"></button>
+  <button class="nd" data-s="m5"></button>
+  <button class="nd" data-s="m6"></button>
+  <button class="nd" data-s="m7"></button>
+  <button class="nd" data-s="m8"></button>
+  <button class="nd" data-s="m9"></button>
+  <button class="nd" data-s="m10"></button>
+  <button class="nd" data-s="m11"></button>
+  <button class="nd" data-s="m12"></button>
+  <button class="nd" data-s="m13"></button>
+  <button class="nd" data-s="m14"></button>
+  <button class="nd" data-s="bib"></button>
+</nav>
+
+<!-- ══════════ COVER ══════════ -->
+<section id="cover">
+  <div class="cover-eyebrow r">A Requiem in Fourteen Movements</div>
+  <h1 class="cover-title r">Requiem<br>for Efficiency</h1>
+  <div class="cover-sub r">On the Saturation of the Jevons Effect</div>
+  <p class="cover-thesis r">Every gain in efficiency is consumed by more use, not less. This is Jevons' paradox, and it is real. But the rebound itself has a ceiling — past which greater efficiency stops producing more knowledge and starts producing only noise. This is that argument, structured as a Mass for the dead.</p>
+  <div class="cover-mvts r">Introitus · Kyrie · Sequentia · Offertorium · Sanctus · Benedictus · Agnus Dei · Communio</div>
+  <div class="cover-scroll">begin the mass ▼</div>
+</section>
+
+<!-- ══════════ I. INTROITUS — Requiem aeternam ══════════ -->
+<div class="mvt-band"><span class="mvt-part">I. Introitus</span><span class="mvt-latin">1 · Requiem æternam</span></div>
+<section id="m1" class="mvt">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">The Only Movement Fully Composed by Mozart Himself</div>
+<div class="mvt-latin-title r">Requiem æternam dona eis, Domine</div>
+<h2 class="mvt-h r">Grant them <em>eternal rest.</em><br>The one claim in this essay<br>no one has ever seriously disputed.</h2>
+<p class="mvt-p r">In 1865, the economist William Stanley Jevons published <em>The Coal Question</em>, observing that improvements in the efficiency of steam engines — each generation of engine using less coal per unit of useful work — did not reduce Britain's total coal consumption. It increased it. Cheaper power per unit made power itself cheaper to deploy everywhere, and total consumption rose faster than efficiency improved.<sup>[1]</sup></p>
+<p class="mvt-p r">This is the one part of the argument that is, at this point, simply established fact — the foundational movement, complete and undisputed, the way Mozart left the Introitus complete before his death. Everything that follows in this essay is built on top of it, extended into domains Jevons never wrote about, argued in ways he never argued. But the Introitus itself needs no completion. Efficiency gains, applied to a resource with elastic demand, increase total consumption of that resource. This has been re-derived, refined, and confirmed across two centuries of energy economics.<sup>[2]</sup></p>
+<div class="mvt-cite r">[1] Jevons, W.S. (1865). <em>The Coal Question.</em> Macmillan. · [2] Alcott, B. (2005). "Jevons' Paradox." <em>Ecological Economics</em> 54(1), 9–21.</div>
+</div>
+</section>
+
+<!-- ══════════ II. KYRIE — Kyrie eleison, double fugue ══════════ -->
+<div class="mvt-band"><span class="mvt-part">II. Kyrie</span><span class="mvt-latin">2 · Kyrie eleison — double fugue</span></div>
+<section id="m2" class="mvt">
+<div class="mvt-inner wide">
+<div class="mvt-eyebrow r">Two Voices, Interlocking</div>
+<div class="mvt-latin-title r">Kyrie eleison. Christe eleison.</div>
+<h2 class="mvt-h r">Two arguments chase each other<br>through the same subject,<br>fifty-eight years apart.</h2>
+<p class="mvt-p r">A fugue states a subject, then answers it in a second voice, then layers the two until they run simultaneously. Jevons' 1865 claim is the subject. The answer arrives in 1980, when the economist Daniel Khazzoom formalized it for modern energy policy: mandated efficiency standards for appliances would not proportionally reduce energy demand, because efficiency gains lower the effective price of the energy service and induce more of it to be consumed.<sup>[3]</sup> The economist Leonard Brookes independently arrived at the same conclusion studying UK national energy statistics, and by 1992 the economist Harry Saunders had named the joint claim the <b>Khazzoom-Brookes postulate</b>: energy-efficiency gains, at the economy-wide level, tend to increase rather than decrease total energy consumption.<sup>[4]</sup></p>
+
+<div class="fugue r">
+<div class="fugue-voice subject">
+<div class="fugue-label">Subject — 1865</div>
+<div class="fugue-name">Jevons</div>
+<p class="fugue-p">A single-resource, single-technology observation: coal, steam engines, the 19th-century British economy. Descriptive, historical, empirical.</p>
+<div class="fugue-cite">Jevons (1865), The Coal Question</div>
+</div>
+<div class="fugue-voice">
+<div class="fugue-label">Answer — 1980 / 1990 / 1992</div>
+<div class="fugue-name">Khazzoom–Brookes</div>
+<p class="fugue-p">A general, economy-wide postulate: any efficiency gain in any resource, given elastic demand, produces this same rebound. Formal, cross-domain, testable.</p>
+<div class="fugue-cite">Khazzoom (1980), Brookes (1990), Saunders (1992)</div>
+</div>
+</div>
+
+<p class="mvt-p r">Modern rebound literature distinguishes three registers of the effect: <em>direct rebound</em> (a more efficient car gets driven more miles), <em>indirect rebound</em> (money saved on fuel is spent on other energy-consuming goods), and <em>economy-wide rebound</em> (efficiency gains lower prices throughout the economy, expanding output and consumption structurally).<sup>[5]</sup> This essay is about a fourth register that the literature has not yet named cleanly: rebound applied to research production itself, and what happens when that rebound saturates.</p>
+<div class="mvt-cite r">[3] Khazzoom, J.D. (1980). "Economic Implications of Mandated Efficiency Standards for Household Appliances." <em>The Energy Journal</em> 1(4). · [4] Saunders, H.D. (1992). "The Khazzoom-Brookes Postulate and Neoclassical Growth." <em>The Energy Journal</em> 13(4). · [5] Sorrell, S. (2009). "Jevons' Paradox revisited: The evidence for backfire from improved energy efficiency." <em>Energy Policy</em> 37(4), 1456–1469.</div>
+</div>
+</section>
+
+<!-- ══════════ III.3 DIES IRAE ══════════ -->
+<div class="mvt-band"><span class="mvt-part">III. Sequentia</span><span class="mvt-latin">3 · Dies iræ — chorus</span></div>
+<section id="m3" class="mvt">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">Case Study — Energy &amp; Light</div>
+<div class="mvt-latin-title r">Dies iræ, dies illa</div>
+<h2 class="mvt-h r">That day of <em>wrath</em> — seven centuries of it,<br>every time light got cheaper.</h2>
+<p class="mvt-p r">The clearest, longest-running empirical confirmation of Jevons' effect is light itself. Economists Roger Fouquet and Peter Pearson reconstructed the price and consumption of lighting in the United Kingdom across seven centuries, from tallow candles in 1300 to electric light in 2000. The efficiency of light production — measured in lumens per unit of energy or cost — increased by roughly three orders of magnitude over that period. Total light consumption per capita increased by a factor on a similar order, tracking the falling price almost exactly.<sup>[6]</sup></p>
+<div class="chorus r">
+<div class="chorus-text">The same pattern recurs with LED lighting in the 21st century: the physicist Jeff Tsao and colleagues found that as solid-state lighting drove the cost per lumen down further, global light consumption rose to consume most of the efficiency gain — more buildings lit longer, more outdoor and decorative lighting, more total lumens produced worldwide, not fewer total watts burned.</div>
+<div class="chorus-attr">Tsao, J.Y. et al. (2010). "Solid-state lighting: an energy-economics perspective." Journal of Physics D 43(35).</div>
+</div>
+<div class="merton-box r">
+<div class="merton-label">Merton's Frame — Unintended Consequences</div>
+<div class="merton-flow"><span class="planned">PLANNED (X):</span> cheaper, more efficient light, to reduce total energy spent on illumination<br><span class="actual">ACTUAL (Y):</span> total light consumption rises to absorb nearly the entire efficiency gain; energy spent on light stays roughly flat across centuries</div>
+<div class="merton-note">Robert Merton's 1936 account of unanticipated consequences names exactly this structure: a purposive action, undertaken for a stated goal, that generates outcomes systematically different from — and sometimes opposite to — the intention behind it, not through error but through the actor's incomplete knowledge of the full causal system the action enters.<sup>[7]</sup></div>
+</div>
+<div class="mvt-cite r">[6] Fouquet, R. &amp; Pearson, P.J.G. (2006). "Seven Centuries of Energy Services: The Price and Use of Light in the United Kingdom (1300–2000)." <em>The Energy Journal</em> 27(1), 139–177. · [7] Merton, R.K. (1936). "The Unanticipated Consequences of Purposive Social Action." <em>American Sociological Review</em> 1(6), 894–904.</div>
+</div>
+</section>
+
+<!-- ══════════ III.4 TUBA MIRUM — solo quartet, intro to 4 domains ══════════ -->
+<div class="mvt-band"><span class="mvt-part">III. Sequentia</span><span class="mvt-latin">4 · Tuba mirum — solo quartet</span></div>
+<section id="m4" class="mvt">
+<div class="mvt-inner wide">
+<div class="mvt-eyebrow r">Four Voices, Introduced Separately</div>
+<div class="mvt-latin-title r">Tuba mirum spargens sonum</div>
+<h2 class="mvt-h r">The trumpet that summons<br>every field to the same reckoning.</h2>
+<p class="mvt-p r">The Tuba Mirum introduces four solo voices — soprano, alto, tenor, bass — each entering separately before they combine. This essay borrows the structure to introduce four research domains that will each be examined for the same pattern: cheaper research infrastructure driving a rebound in research volume, and that rebound then interacting differently with each field's capacity to synthesize what it produces.</p>
+<div class="quartet r">
+<div class="voice"><div class="voice-part">Soprano</div><div class="voice-name">Machine Learning</div><p class="voice-p">Democratized GPU and cloud compute access, post-2012, driving an explosion in trainable models and publishable results.</p></div>
+<div class="voice"><div class="voice-part">Alto</div><div class="voice-name">Physics</div><p class="voice-p">arXiv (est. 1991) collapsing distribution cost to near zero, decades before the other three fields had an equivalent.</p></div>
+<div class="voice"><div class="voice-part">Tenor</div><div class="voice-name">Psychology</div><p class="voice-p">Amazon Mechanical Turk (est. 2005) collapsing the cost of human subject recruitment from weeks and dollars to minutes and cents.</p></div>
+<div class="voice"><div class="voice-part">Bass</div><div class="voice-name">Biomedicine</div><p class="voice-p">High-throughput sequencing and preprint servers (bioRxiv 2013, medRxiv 2019) collapsing both data generation and distribution cost simultaneously.</p></div>
+</div>
+<p class="mvt-p r">Each domain follows the Kyrie's fugue structure at a smaller scale: an efficiency gain (the subject), and a rebound in volume (the answer). What differs between them, and what the rest of the Sequentia examines, is whether each field's capacity for synthesis — review, replication, meta-analysis — kept pace with the rebound, or was overrun by it.</p>
+</div>
+</section>
+
+<!-- ══════════ III.5 REX TREMENDAE — ML ══════════ -->
+<div class="mvt-band"><span class="mvt-part">III. Sequentia</span><span class="mvt-latin">5 · Rex tremendæ — chorus</span></div>
+<section id="m5" class="mvt">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">Case Study — Machine Learning Research</div>
+<div class="mvt-latin-title r">Rex tremendæ majestatis</div>
+<h2 class="mvt-h r">King of tremendous majesty —<br>and tremendous volume.</h2>
+<p class="mvt-p r">Between 2012 and the early 2020s, the cost of the compute required to train a competitive machine learning model fell by orders of magnitude in effective terms — cloud GPU rental, open-source frameworks (TensorFlow 2015, PyTorch 2016), and pretrained model checkpoints all collapsing the barrier to entry that had previously restricted deep learning research to a small number of well-resourced labs.<sup>[8]</sup> Annual submissions to the field's flagship venues — NeurIPS, ICML, ICLR — grew from low thousands in the early 2010s to tens of thousands by the early 2020s, an increase the field's own program chairs have repeatedly flagged as outpacing the growth of qualified reviewers.<sup>[9]</sup></p>
+<div class="merton-box r">
+<div class="merton-label">Merton's Frame</div>
+<div class="merton-flow"><span class="planned">PLANNED (X):</span> democratize access to deep learning research, letting more labs and independent researchers contribute<br><span class="actual">ACTUAL (Y):</span> reviewer capacity is overrun; benchmark-chasing and minor architectural variation ("graduate student descent") become a viable publication strategy independent of genuine advance</div>
+<div class="merton-note">The 2021 NeurIPS peer review consistency experiment re-reviewed a subset of submissions with a second, independent committee and found roughly half of the accepted papers would have been rejected under the second panel's judgment — direct evidence that reviewer capacity, not paper quality, had become the binding constraint on the field's output.<sup>[10]</sup></div>
+</div>
+<div class="mvt-cite r">[8] Sevilla, J. et al. (2022). "Compute Trends Across Three Eras of Machine Learning." <em>Epoch AI</em> / arXiv:2202.05924. · [9] NeurIPS Program Committee statistics, published annually, 2018–2023. · [10] Cortes, C. &amp; Lawrence, N. (2021). "Inconsistency in Conference Peer Review: Revisiting the 2014 NeurIPS Experiment," extended 2021 analysis, arXiv:2109.09774.</div>
+</div>
+</section>
+
+<!-- ══════════ III.6 RECORDARE — Physics ══════════ -->
+<div class="mvt-band"><span class="mvt-part">III. Sequentia</span><span class="mvt-latin">6 · Recordare — solo quartet</span></div>
+<section id="m6" class="mvt">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">Case Study — Physics &amp; arXiv (the gentler movement)</div>
+<div class="mvt-latin-title r">Recordare, Jesu pie</div>
+<h2 class="mvt-h r">Remember — the field<br>that mostly <em>absorbed</em> its own rebound.</h2>
+<p class="mvt-p r">arXiv, launched in 1991, is the oldest of the four infrastructures examined here, and physics has had three decades to adapt to it. Submission volume grew from roughly 400 papers per month in the mid-1990s to over 20,000 per month by the early 2020s — a rebound fully consistent with Jevons' pattern.<sup>[11]</sup> But physics entered this rebound with pre-existing, centuries-old norms of collaborative verification (large experimental collaborations with hundreds of co-authors and internal review) and a citation culture that rewards synthesis papers and review articles as heavily as original results.</p>
+<p class="mvt-p r">This is the Recordare's gentler register: the same rebound mechanism as Rex Tremendae, but landing in a field whose synthesis infrastructure — peer collaboration norms, big-experiment internal vetting, a strong review-article tradition — had decades to absorb it before the volume became unmanageable. The rebound did not saturate here in the way it has elsewhere in this essay, not because physics researchers behave differently, but because the field's synthesis capacity was built before the rebound arrived, rather than after.</p>
+<div class="mvt-cite r">[11] arXiv.org submission rate statistics, Cornell University, published monthly archive, 1991–2023.</div>
+</div>
+</section>
+
+<!-- ══════════ III.7 CONFUTATIS — Psych & Biomed ══════════ -->
+<div class="mvt-band"><span class="mvt-part">III. Sequentia</span><span class="mvt-latin">7 · Confutatis — chorus</span></div>
+<section id="m7" class="mvt">
+<div class="mvt-inner wide">
+<div class="mvt-eyebrow r">Case Study — Psychology &amp; Biomedicine (the damned, and the plea)</div>
+<div class="mvt-latin-title r">Confutatis maledictis... voca me cum benedictis</div>
+<h2 class="mvt-h r">"Once the damned are confounded" —<br>then, quietly, <em>"call me among the blessed."</em></h2>
+<p class="mvt-p r">The Confutatis is built on a contrast: a violent chorus condemning the damned, followed immediately by a hushed plea to be spared their fate. This essay uses the same contrast for two fields that show the sharpest visible cost of unmanaged rebound, alongside the reform movements that emerged specifically in response.</p>
+
+<div class="quartet r" style="grid-template-columns:1fr 1fr">
+<div class="voice">
+<div class="voice-part">The Damned — Psychology</div>
+<div class="voice-name">Mechanical Turk &amp; the Replication Crisis</div>
+<p class="voice-p">Amazon Mechanical Turk collapsed subject recruitment cost from weeks and hundreds of dollars to minutes and cents per participant, driving a documented surge in underpowered, rapidly produced studies.<sup>[12]</sup> The 2015 Open Science Collaboration replication project attempted to reproduce 100 published psychology studies and found only <em>36%</em> replicated with statistical significance.<sup>[13]</sup> A parallel problem emerged inside the efficiency gain itself: research identified a population of "professional" MTurk respondents completing hundreds of studies, degrading data quality in the very pool the efficiency gain was meant to make more useful.<sup>[14]</sup></p>
+</div>
+<div class="voice">
+<div class="voice-part">The Damned — Biomedicine</div>
+<div class="voice-name">Preprints &amp; the Surgisphere Retraction</div>
+<p class="voice-p">COVID-19 drove an unprecedented surge in medical preprints and expedited peer review, with more than 30,000 COVID-related papers published in 2020 alone.<sup>[15]</sup> The clearest failure case: in May 2020, The Lancet and NEJM both published, then retracted within weeks, high-profile studies built on fabricated hospital data from a company called Surgisphere — data that had never been independently verified, pushed through under pandemic-era publication speed pressure.<sup>[16]</sup></p>
+</div>
+</div>
+<div class="chorus r">
+<div class="chorus-text">John Ioannidis's 2005 paper, provocatively but accurately titled "Why Most Published Research Findings Are False," predates both crises and supplies the mechanism common to each: as the volume of tested hypotheses in a field rises faster than the statistical power and independent verification applied to each one, the proportion of published findings that are false rises correspondingly — a direct, quantifiable link between rebound volume and epistemic degradation.</div>
+<div class="chorus-attr">Ioannidis, J.P.A. (2005). "Why Most Published Research Findings Are False." PLoS Medicine 2(8), e124.</div>
+</div>
+<p class="mvt-p r">The plea — <em>voca me cum benedictis</em> — is the reform movement each field mounted in direct response: preregistration, the Center for Open Science's Registered Reports format, and mandatory data-sharing requirements adopted by major biomedical journals after 2020. These are examined properly in the Benedictus, below.</p>
+<div class="mvt-cite r">[12] Chandler, J. &amp; Shapiro, D. (2016). "Conducting Clinical Research Using Crowdsourced Convenience Samples." <em>Annual Review of Clinical Psychology</em> 12, 53–81. · [13] Open Science Collaboration (2015). "Estimating the reproducibility of psychological science." <em>Science</em> 349(6251). · [14] Chmielewski, M. &amp; Kucker, S.C. (2020). "An MTurk Crisis? Shifts in Data Quality and the Impact on Study Results." <em>Social Psychological and Personality Science</em> 11(4). · [15] Else, H. (2020). "How a torrent of COVID science changed research publishing." <em>Nature</em> 588. · [16] Mehra, M.R. et al. (2020, retracted). <em>The Lancet</em>; retraction notice, June 2020.</div>
+</div>
+</section>
+
+<!-- ══════════ III.8 LACRIMOSA — THE SATURATION ARGUMENT ══════════ -->
+<div class="mvt-band"><span class="mvt-part">III. Sequentia</span><span class="mvt-latin">8 · Lacrimosa — 8 bars Mozart, rest Süssmayr</span></div>
+<section id="m8" class="mvt">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">Where the Established Literature Ends and This Essay's Own Claim Begins</div>
+<div class="mvt-latin-title r">Lacrimosa dies illa</div>
+<h2 class="mvt-h r">Mozart wrote eight bars<br>and then <em>he died.</em><br>Everything after this sentence is mine.</h2>
+<p class="mvt-p r">Mozart sketched the Lacrimosa's vocal parts and the first eight bars of orchestration before his death in December 1791. Franz Xaver Süssmayr, his student, completed the rest from sketches and his own understanding of the material — and the Lacrimosa, unfinished by its original composer, is nonetheless the most famous eight minutes in the entire work.</p>
+<p class="mvt-p r">The established rebound literature — Jevons, Khazzoom-Brookes, Ioannidis, the Open Science Collaboration, the Surgisphere retraction — documents the rebound itself and its symptoms. It does not, as far as I can find in the literature, name or formalize the specific claim this essay is built on: <b>that the rebound effect in research production has an inflection point, past which additional efficiency gains stop producing proportional new knowledge and instead produce pure volume — publishable, citable, but non-additive to the field's actual synthesized understanding.</b> This is the eight bars ending, and the rest is mine.</p>
+<div class="chorus r">
+<div class="chorus-text">Call this the saturation point of the Jevons effect: not a failure of efficiency to produce more output — it always produces more output, exactly as Jevons predicted — but a failure of that output to remain metabolizable by the field's finite synthesis capacity: its reviewers, its replicators, its meta-analysts, its textbook writers. Below the saturation point, rebound is Jevons' original story: more use, more value delivered per unit of resource. Above it, rebound decouples from value. Volume keeps rising. Synthesized knowledge does not.</div>
+</div>
+<p class="mvt-p r">The mechanism is structural, not moral. No researcher in any of the four domains examined here is behaving irrationally, badly, or against their own incentives. Rex Tremendae's benchmark-chasing, Confutatis's underpowered MTurk studies, the Surgisphere retraction — each is the locally rational output of a system optimizing for publication volume under review and verification capacity that did not scale with the efficiency gain that produced the volume. This is Merton's mechanism, applied at the scale of an entire epistemic infrastructure rather than a single policy.<sup>[7]</sup></p>
+<div class="mvt-cite r">[7] Merton, R.K. (1936), op. cit. · Compare: Price, D.J. de Solla (1963). <em>Little Science, Big Science.</em> Columbia University Press — the earliest formal observation that scientific output grows exponentially while the population able to evaluate it grows only linearly, the structural precondition for the saturation point argued here.</div>
+</div>
+</section>
+
+<!-- ══════════ IV.9 DOMINE JESU — Offertorium ══════════ -->
+<div class="mvt-band"><span class="mvt-part">IV. Offertorium</span><span class="mvt-latin">9 · Domine Jesu — quartet + chorus</span></div>
+<section id="m9" class="mvt">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">What Saturated Fields Produce Instead of Knowledge</div>
+<div class="mvt-latin-title r">Libera animas omnium fidelium... de ore leonis</div>
+<h2 class="mvt-h r">"Deliver the souls of the faithful<br>from the mouth of the lion" —<br>the mechanisms that eat volume without producing understanding.</h2>
+<p class="mvt-p r">The Domine Jesu is a prayer for deliverance from specific, named dangers: the lion's mouth, the deep pit, the dark. Saturated research fields have their own named dangers, each well-documented independent of this essay's synthesis:</p>
+<div class="readout r">
+<div class="readout-row"><div class="readout-k">P-hacking</div><div class="readout-v">Selective reporting of the subset of analyses that cross a significance threshold, enabled by cheap, repeatable statistical testing.<sup>[17]</sup></div></div>
+<div class="readout-row"><div class="readout-k">Salami-slicing</div><div class="readout-v">Splitting a single dataset or study into the minimum publishable unit across multiple papers, maximizing publication count per unit of underlying research.<sup>[18]</sup></div></div>
+<div class="readout-row"><div class="readout-k">Citation cartels</div><div class="readout-v">Coordinated reciprocal citation among researchers or journals to inflate impact metrics, documented and sanctioned by Clarivate/Web of Science.<sup>[19]</sup></div></div>
+<div class="readout-row"><div class="readout-k">Predatory publishing</div><div class="readout-v">Journals charging publication fees with minimal or no peer review, expanding in direct proportion to the pressure to publish volume.<sup>[20]</sup></div></div>
+</div>
+<p class="mvt-p r">None of these mechanisms are new inventions of the digital era. What changed is throughput: each mechanism now operates at a volume that would have been mechanically impossible before the efficiency gains examined in the Sequentia. The lion's mouth was always there. The rebound simply made it large enough to matter at the level of entire fields rather than isolated bad actors.</p>
+<div class="mvt-cite r">[17] Simmons, J.P., Nelson, L.D. &amp; Simonsohn, U. (2011). "False-Positive Psychology." <em>Psychological Science</em> 22(11). · [18] Committee on Publication Ethics (COPE). "Guidance on Salami Publication." · [19] Fister, I. et al. (2016). "Toward the Discovery of Citation Cartels in Citation Networks." <em>Frontiers in Physics</em> 4. · [20] Beall, J. (2012–2017). "Beall's List of Predatory Journals," archived criteria and methodology.</div>
+</div>
+</section>
+
+<!-- ══════════ IV.10 HOSTIAS — the sacrifice/cost ══════════ -->
+<div class="mvt-band"><span class="mvt-part">IV. Offertorium</span><span class="mvt-latin">10 · Hostias — chorus</span></div>
+<section id="m10" class="mvt">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">The Resources Poured In, and What Came Back</div>
+<div class="mvt-latin-title r">Hostias et preces tibi, Domine</div>
+<h2 class="mvt-h r">Sacrifices and prayers offered up —<br>at a diminishing rate of return.</h2>
+<p class="mvt-p r">Global R&amp;D expenditure has risen consistently for decades — UNESCO data places gross domestic expenditure on research and development at over 2.5% of global GDP by the early 2020s, up from under 1.5% in the 1990s.<sup>[21]</sup> Over the same period, multiple independent lines of evidence point to declining research productivity per dollar or per researcher: the "Are Ideas Getting Harder to Find?" analysis by Bloom, Jones, Van Reenen, and Webb found that research effort in fields from semiconductors to agriculture has had to rise by a factor of roughly 2 to 40, depending on the field, just to sustain a constant rate of productivity growth.<sup>[22]</sup></p>
+<div class="merton-box r">
+<div class="merton-label">Merton's Frame, at the level of an entire funding system</div>
+<div class="merton-flow"><span class="planned">PLANNED (X):</span> more funding and infrastructure produces proportionally more scientific understanding<br><span class="actual">ACTUAL (Y):</span> funding and researcher headcount must rise superlinearly just to hold productivity constant, because the volume of output has decoupled from the volume of synthesized knowledge</div>
+<div class="merton-note">This is the economy-wide register of the Khazzoom-Brookes postulate, applied to the research economy rather than the energy economy: the "price" of a new discovery, denominated in researcher-hours, keeps rising even as the tools for producing candidate discoveries keep getting cheaper.</div>
+</div>
+<div class="mvt-cite r">[21] UNESCO Institute for Statistics, Gross Domestic Expenditure on R&amp;D (GERD) as % of GDP, global series, 1996–2021. · [22] Bloom, N., Jones, C.I., Van Reenen, J. &amp; Webb, M. (2020). "Are Ideas Getting Harder to Find?" <em>American Economic Review</em> 110(4), 1104–1144.</div>
+</div>
+</section>
+
+<!-- ══════════ V.11 SANCTUS — fully Süssmayr, the proposed metric ══════════ -->
+<div class="mvt-band"><span class="mvt-part">V. Sanctus</span><span class="mvt-latin">11 · Sanctus — composed entirely by Süssmayr</span></div>
+<section id="m11" class="mvt parchment">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">A Movement With No Mozart in It At All — Fully Original Synthesis</div>
+<div class="mvt-latin-title r">Sanctus, Sanctus, Sanctus</div>
+<h2 class="mvt-h r">A proposed heuristic,<br>offered with no inherited authority<br>except whether it holds.</h2>
+<p class="mvt-p r">The Sanctus is the one movement in the traditional Requiem sequence with no surviving Mozart material behind it whatsoever — Süssmayr's alone, start to finish. This essay uses it the same way: a fully original proposal, standing without the cover of established literature, to be judged only on whether it is useful.</p>
+<div class="readout r">
+<div class="readout-row"><div class="readout-k">Proposed heuristic</div><div class="readout-v">A field has crossed its saturation point when the growth rate of <em>synthesis products</em> (systematic reviews, successful replications, textbook revisions, consensus statements) falls durably below the growth rate of <em>primary output</em> (papers, preprints, datasets) for that field.</div></div>
+<div class="readout-row"><div class="readout-k">Why this metric</div><div class="readout-v">It does not require judging any individual paper's quality — an impossible task at scale. It only requires comparing two growth rates the field already tracks: how fast raw output grows, versus how fast that output is being metabolized into settled, citable, teachable understanding.</div></div>
+<div class="readout-row"><div class="readout-k">Testable signature</div><div class="readout-v">A widening gap between citation count (attention paid to individual papers) and replication or meta-analytic confirmation rate (attention paid to whether the finding holds) is the observable footprint of saturation, and is measurable with data most fields already collect.</div></div>
+</div>
+<p class="mvt-p r">This is not offered as a proven law. It is offered the way Süssmayr offered the Sanctus: a plausible completion of a pattern whose beginning is well established, built by someone who studied the original closely enough to have a reasonable guess at where it was going.</p>
+</div>
+</section>
+
+<!-- ══════════ VI.12 BENEDICTUS — fully Süssmayr, the counter-case ══════════ -->
+<div class="mvt-band"><span class="mvt-part">VI. Benedictus</span><span class="mvt-latin">12 · Benedictus — composed entirely by Süssmayr</span></div>
+<section id="m12" class="mvt parchment">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">A Field That Noticed and Corrected — the Blessing, as Counter-Evidence</div>
+<div class="mvt-latin-title r">Benedictus qui venit</div>
+<h2 class="mvt-h r">Blessed is the one who comes —<br>psychology, after 2015, <em>partially</em> did.</h2>
+<p class="mvt-p r">The Open Science Collaboration's 2015 replication result was not received passively. The Center for Open Science, founded 2013, expanded its Registered Reports format — in which study design and analysis plan are peer-reviewed and accepted for publication before data collection, removing the incentive to selectively report only significant results — to over 300 journals by the early 2020s.<sup>[23]</sup> Preregistration on the Open Science Framework grew from a few hundred submissions in 2013 to well over 30,000 annually by the early 2020s.<sup>[24]</sup> A 2021 meta-analysis of Registered Reports found substantially lower rates of positive-result bias compared to standard publication, direct evidence the reform is measurably changing the field's output composition, not merely its rhetoric.<sup>[25]</sup></p>
+<p class="mvt-p r">This is the Benedictus's function in the argument: proof that the saturation point, once identified, is not a terminal condition. It names where a field's synthesis infrastructure — its review and replication capacity — needs deliberate investment to catch up with a rebound in raw output. Psychology did not solve its saturation problem completely. But it is the clearest existing case of a field recognizing the gap between output growth and synthesis growth, named in the Sanctus above, and building infrastructure specifically to close it.</p>
+<div class="mvt-cite r">[23] Center for Open Science, Registered Reports adoption statistics, cos.io, 2013–2023. · [24] Open Science Framework, annual preregistration counts, published dashboard. · [25] Scheel, A.M., Schijen, M. &amp; Lakens, D. (2021). "An Excess of Positive Results: Comparing the Standard Psychology Literature With Registered Reports." <em>Advances in Methods and Practices in Psychological Science</em> 4(2).</div>
+</div>
+</section>
+
+<!-- ══════════ VII.13 AGNUS DEI — the plea for rest ══════════ -->
+<div class="mvt-band"><span class="mvt-part">VII. Agnus Dei</span><span class="mvt-latin">13 · Agnus Dei — chorus</span></div>
+<section id="m13" class="mvt">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">The Plea Underneath All of This</div>
+<div class="mvt-latin-title r">Agnus Dei... dona eis requiem</div>
+<h2 class="mvt-h r">Grant them <em>rest</em> —<br>not more output. Rest.</h2>
+<p class="mvt-p r">Every movement of the Agnus Dei repeats the same plea three times, each time asking not for triumph but for rest. This is the argument's least comfortable implication: the correct response to saturation is not more efficiency. Applying more efficiency to a field whose synthesis capacity is already the binding constraint only widens the gap the Sanctus identified. The correct response is investment in synthesis itself — systematic review capacity, replication infrastructure, meta-science as a funded discipline in its own right rather than an afterthought.</p>
+<div class="chorus r">
+<div class="chorus-text">Meta-science — the study of how science itself is produced, verified, and synthesized — remains a tiny fraction of total research funding relative to primary research production, even in fields where the gap between output and synthesis is now well documented. The imbalance is not an oversight. It is the direct, structural consequence of a system whose incentives reward the production of new candidate findings far more than the confirmation or refutation of existing ones — precisely the incentive gradient that produces saturation in the first place.</div>
+</div>
+<p class="mvt-p r">Rest, in this frame, does not mean fewer discoveries. It means matching the growth rate of what a field produces to the growth rate of what it can actually verify, teach, and build on — which is the only sense in which "grant them rest" was ever going to be an argument about research policy rather than a prayer.</p>
+</div>
+</section>
+
+<!-- ══════════ VIII.14 COMMUNIO — Lux aeterna, reuses opening material ══════════ -->
+<div class="mvt-band"><span class="mvt-part">VIII. Communio</span><span class="mvt-latin">14 · Lux æterna — reuses Introitus &amp; Kyrie</span></div>
+<section id="m14" class="mvt" style="border-bottom:2px solid var(--candle)">
+<div class="mvt-inner">
+<div class="mvt-eyebrow r">The Closing Movement Returns to Where the Requiem Began</div>
+<div class="mvt-latin-title r">Lux æterna luceat eis, Domine</div>
+<h2 class="mvt-h r">Let <em>eternal light</em> shine on them —<br>the same light Jevons was already writing about<br>in 1865.</h2>
+<p class="mvt-p r">The Lux Aeterna, by design, reuses the musical material of the Introitus and Kyrie — the Requiem ends by returning, note for note in places, to where it started. This essay closes the same way. Jevons wrote, in 1865, about coal: "It is wholly a confusion of ideas to suppose that the economical use of fuel is equivalent to a diminished consumption. The very contrary is the truth."<sup>[1]</sup> Every case study in this essay — lighting, machine learning, physics, psychology, biomedicine, and the funding economy that sustains all of them — is a restatement of that single sentence in a domain Jevons never lived to see.</p>
+<p class="mvt-p r">What this essay adds, at the Lacrimosa, is not a correction to Jevons. It is a second sentence, appended to the first: <em>the economical use of a resource is not equivalent to diminished consumption of that resource — and neither is the increased production of a field's raw output equivalent to increased understanding within it, past the point where that output outruns the field's capacity to metabolize it.</em> Jevons found the first sentence in coal. This essay has tried to find the second in research itself, structured, as he never had reason to structure his own argument, as a Mass for the dead.</p>
+</div>
+</section>
+
+<!-- ══════════ BIBLIOGRAPHY ══════════ -->
+<section id="bib">
+<div class="bib-inner">
+<h2 class="bib-h r">References</h2>
+<div class="bib-sub r">All claims sourced. No fabricated statistics. No invented studies.</div>
+<div class="bib-list r">
+<div class="bib-item"><span class="n">[1]</span> Jevons, W.S. (1865). <em>The Coal Question: An Inquiry Concerning the Progress of the Nation, and the Probable Exhaustion of Our Coal-Mines.</em> Macmillan &amp; Co.</div>
+<div class="bib-item"><span class="n">[2]</span> Alcott, B. (2005). "Jevons' Paradox." <em>Ecological Economics</em> 54(1), 9–21.</div>
+<div class="bib-item"><span class="n">[3]</span> Khazzoom, J.D. (1980). "Economic Implications of Mandated Efficiency Standards for Household Appliances." <em>The Energy Journal</em> 1(4), 21–40.</div>
+<div class="bib-item"><span class="n">[4]</span> Saunders, H.D. (1992). "The Khazzoom-Brookes Postulate and Neoclassical Growth." <em>The Energy Journal</em> 13(4), 131–148.</div>
+<div class="bib-item"><span class="n">[5]</span> Sorrell, S. (2009). "Jevons' Paradox revisited: The evidence for backfire from improved energy efficiency." <em>Energy Policy</em> 37(4), 1456–1469.</div>
+<div class="bib-item"><span class="n">[6]</span> Fouquet, R. &amp; Pearson, P.J.G. (2006). "Seven Centuries of Energy Services: The Price and Use of Light in the United Kingdom (1300–2000)." <em>The Energy Journal</em> 27(1), 139–177.</div>
+<div class="bib-item"><span class="n">[7]</span> Merton, R.K. (1936). "The Unanticipated Consequences of Purposive Social Action." <em>American Sociological Review</em> 1(6), 894–904.</div>
+<div class="bib-item"><span class="n">[8]</span> Sevilla, J. et al. (2022). "Compute Trends Across Three Eras of Machine Learning." Epoch AI / arXiv:2202.05924.</div>
+<div class="bib-item"><span class="n">[9]</span> NeurIPS Program Committee. Annual submission and acceptance statistics, 2018–2023.</div>
+<div class="bib-item"><span class="n">[10]</span> Cortes, C. &amp; Lawrence, N. (2021). "Inconsistency in Conference Peer Review," extended analysis, arXiv:2109.09774.</div>
+<div class="bib-item"><span class="n">[11]</span> arXiv.org. Submission rate statistics, Cornell University archive, 1991–2023.</div>
+<div class="bib-item"><span class="n">[12]</span> Chandler, J. &amp; Shapiro, D. (2016). "Conducting Clinical Research Using Crowdsourced Convenience Samples." <em>Annual Review of Clinical Psychology</em> 12, 53–81.</div>
+<div class="bib-item"><span class="n">[13]</span> Open Science Collaboration (2015). "Estimating the reproducibility of psychological science." <em>Science</em> 349(6251), aac4716.</div>
+<div class="bib-item"><span class="n">[14]</span> Chmielewski, M. &amp; Kucker, S.C. (2020). "An MTurk Crisis? Shifts in Data Quality and the Impact on Study Results." <em>Social Psychological and Personality Science</em> 11(4), 464–473.</div>
+<div class="bib-item"><span class="n">[15]</span> Else, H. (2020). "How a torrent of COVID science changed research publishing." <em>Nature</em> 588, 553.</div>
+<div class="bib-item"><span class="n">[16]</span> Mehra, M.R. et al. (2020, retracted). <em>The Lancet</em>; retraction, June 2020.</div>
+<div class="bib-item"><span class="n">[17]</span> Simmons, J.P., Nelson, L.D. &amp; Simonsohn, U. (2011). "False-Positive Psychology." <em>Psychological Science</em> 22(11), 1359–1366.</div>
+<div class="bib-item"><span class="n">[18]</span> Committee on Publication Ethics (COPE). "Guidance on Salami Publication."</div>
+<div class="bib-item"><span class="n">[19]</span> Fister, I. et al. (2016). "Toward the Discovery of Citation Cartels in Citation Networks." <em>Frontiers in Physics</em> 4, 49.</div>
+<div class="bib-item"><span class="n">[20]</span> Beall, J. (2012–2017). "Beall's List of Predatory Journals," archived criteria.</div>
+<div class="bib-item"><span class="n">[21]</span> UNESCO Institute for Statistics. Gross Domestic Expenditure on R&amp;D (GERD), % of GDP, global series, 1996–2021.</div>
+<div class="bib-item"><span class="n">[22]</span> Bloom, N., Jones, C.I., Van Reenen, J. &amp; Webb, M. (2020). "Are Ideas Getting Harder to Find?" <em>American Economic Review</em> 110(4), 1104–1144.</div>
+<div class="bib-item"><span class="n">[23]</span> Center for Open Science. Registered Reports adoption statistics, cos.io, 2013–2023.</div>
+<div class="bib-item"><span class="n">[24]</span> Open Science Framework. Annual preregistration counts, published dashboard.</div>
+<div class="bib-item"><span class="n">[25]</span> Scheel, A.M., Schijen, M. &amp; Lakens, D. (2021). "An Excess of Positive Results: Comparing the Standard Psychology Literature With Registered Reports." <em>Advances in Methods and Practices in Psychological Science</em> 4(2).</div>
+<div class="bib-item"><span class="n">[Price]</span> Price, D.J. de Solla (1963). <em>Little Science, Big Science.</em> Columbia University Press.</div>
+</div>
+</div>
+</section>
+
+<script>
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(scrollY/(h.scrollHeight-h.clientHeight)*100)+'%'},{passive:true});
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')})},{threshold:.07});
+document.querySelectorAll('.r,.rf').forEach(el=>obs.observe(el));
+const sections=document.querySelectorAll('section[id]');
+const dots=document.querySelectorAll('.nd');
+const sObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){dots.forEach(d=>d.classList.toggle('on',d.dataset.s===e.target.id))}})},{threshold:.3});
+sections.forEach(s=>sObs.observe(s));
+dots.forEach(d=>d.addEventListener('click',()=>document.getElementById(d.dataset.s)?.scrollIntoView({behavior:'smooth'})));
+</script>
+</body>
+</html>
