@@ -252,6 +252,30 @@ const portfolioData = {
     ],
     posts: [
         {
+            title: "The Right to be Obsolete",
+            date: "July 24, 2026",
+            summary: "We are terrified of being left behind, of becoming irrelevant in the relentless churn of updates. But obsolescence is not a failure; it is a profound liberation.",
+            link: "The-Right-to-be-Obsolete.html"
+        },
+        {
+            title: "The Performative Ghost",
+            date: "July 24, 2026",
+            summary: "You are no longer a person; you are a brand managing a lifelong public relations crisis. The individual has died, replaced by a digital avatar.",
+            link: "The-Performative-Ghost.html"
+        },
+        {
+            title: "The Weaponization of Apathy",
+            date: "July 24, 2026",
+            summary: "They do not need your anger. They do not need your passion. They need your exhaustion. Apathy is the ultimate compliance mechanism.",
+            link: "The-Weaponization-of-Apathy.html"
+        },
+        {
+            title: "The Tyranny of the Metric",
+            date: "July 24, 2026",
+            summary: "Once you measure a behavior, you destroy its soul. A metric is an algorithm that incentivizes optimization over truth.",
+            link: "The-Tyranny-of-the-Metric.html"
+        },
+        {
             title: "The Revolution Will Not Be Exterminated",
             date: "July 23, 2026",
             summary: "Ten specimens, five decades, one pattern. Every generation that names its own grievance is called a pest before it is called a citizen. This is a catalog of the pest control.",
