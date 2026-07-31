@@ -61,6 +61,13 @@ const portfolioData = {
     ],
     projects: [
         {
+            title: "Everything You Love is an Algorithm",
+            tech: "HTML, CSS, JS, Editorial Brutalism",
+            description: "A digital book exploring the intersection of algorithms, humanity, and system design. Features a custom hybrid horizontal-scroll architecture with strict book typography.",
+            cruelDescription: "A fully custom web-based book reading experience. Eschews standard vertical scrolling for a sticky horizontal pivot. Typography follows strict print typesetting rules because web text is usually unreadable slop.",
+            link: "everything_you_love_is_an_algorithm.html"
+        },
+        {
             title: "QwD: قَلَّ وَدَلَّ",
             tech: "Zig 0.13.0, SIMD, C-API",
             description: "Ultra-high-throughput genomic analytics engine. Implements a columnar bitplane architecture to eliminate the 'ASCII Tax' in sequence processing.",
@@ -244,6 +251,12 @@ const portfolioData = {
         "Systems Programming", "Network Biology", "Quantum Computing", "Algorithmic Rigor", "Open Source"
     ],
     posts: [
+        {
+            title: "The Revolution Will Not Be Exterminated",
+            date: "July 23, 2026",
+            summary: "Ten specimens, five decades, one pattern. Every generation that names its own grievance is called a pest before it is called a citizen. This is a catalog of the pest control.",
+            link: "The-Revolution-Will-Not-be-Exterminated.html"
+        },
         {
             title: "Requiem for Efficiency",
             date: "July 14, 2026",

@@ -46,6 +46,7 @@ function renderApp() {
             <button class="nav-btn ${currentSection === 'biozig' ? 'active' : ''}" onclick="switchSection('biozig')" style="color: rgba(var(--accent-rgb), 1); font-weight: bold;">BioZig Software Foundation</button>
             <button class="nav-btn ${currentSection === 'works' ? 'active' : ''}" onclick="switchSection('works')">Systems & Works</button>
             <button class="nav-btn ${currentSection === 'essays' ? 'active' : ''}" onclick="switchSection('essays')">Essays & Logs</button>
+            <button class="nav-btn ${currentSection === 'book' ? 'active' : ''}" onclick="switchSection('book')" style="font-style: italic;">The Book</button>
             <button class="nav-btn ${currentSection === 'timeline' ? 'active' : ''}" onclick="switchSection('timeline')">Timeline & Pubs</button>
         </nav>
     `;
@@ -121,6 +122,30 @@ function renderApp() {
                 </div>
 
                 <a href="https://biozig.org" target="_blank" style="display: inline-block; margin-top: 50px; padding: 15px 30px; background: var(--text-main); color: var(--bg-main); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; font-size: 0.9rem; transition: opacity 0.3s;">Explore the Framework / biozig.org ↗</a>
+            </div>
+        `;
+    } else if (currentSection === 'book') {
+        html += `
+            <div style="max-width: 900px;">
+                <h2 class="section-title" style="margin-bottom: 20px;">Everything You Love is an Algorithm</h2>
+                
+                <h3 style="font-family: var(--serif); font-size: 3rem; font-style: italic; font-weight: 300; margin-bottom: 40px; line-height: 1.1;">
+                    The inevitable end of all systems, the curse of time, and the fierce choice to rebel.
+                </h3>
+                
+                <div style="font-size: 1.25rem; line-height: 1.8; color: var(--text-main); display: flex; flex-direction: column; gap: 25px;">
+                    <p>
+                        A comprehensive six-part arc exploring the intersection of algorithms, humanity, and system design. This is not a collection of blogs; it is a meticulously typeset digital volume.
+                    </p>
+                    <p>
+                        It explores the failure of objective lenses when reality itself has been warped, how the machine's noise degrades our language, and the crisis of the individual navigating this manufactured society.
+                    </p>
+                    <p style="padding-left: 20px; border-left: 2px solid rgb(var(--accent-rgb)); font-family: var(--mono); font-size: 1.05rem; color: var(--text-muted); line-height: 1.6;">
+                        "Features a custom hybrid horizontal-scroll architecture. Typography follows strict print typesetting rules (justified alignment, auto-hyphenation) because standard web text is an unreadable compromise."
+                    </p>
+                </div>
+
+                <a href="everything_you_love_is_an_algorithm.html" target="_blank" style="display: inline-block; margin-top: 50px; padding: 15px 30px; background: var(--text-main); color: var(--bg-main); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; font-size: 0.9rem; transition: opacity 0.3s;">Read the Book ↗</a>
             </div>
         `;
     } else if (currentSection === 'works') {
