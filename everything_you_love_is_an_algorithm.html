@@ -38,35 +38,7 @@ body { -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-selec
 section { position: relative; display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden; }
 #vertical-intro section { min-height: 100vh; }
 
-/* HORIZONTAL SCROLL ENGINE */
-#horizontal-scroll-container {
-    position: relative;
-    width: 100%;
-    /* height set by JS */
-}
-.sticky-viewport {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    width: 100%;
-    overflow: hidden; /* Hides internal scrollbar for perfect math */
-}
-#horizontal-track {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    width: max-content;
-    will-change: transform;
-}
-
-.book-part {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    flex-shrink: 0;
-    /* max-width removed so columns can expand horizontally infinitely */
-}
-
+/* HORIZONTAL SCROLL ENGINE REMOVED */
 /* HORIZONTAL PAGE COLUMNS (Shared Base) */
 .inner-wrap {
     height: 80vh;
@@ -429,9 +401,9 @@ section { position: relative; display: flex; flex-direction: column; justify-con
 </section>
 </div>
 
-<div id="horizontal-scroll-container">
-  <div class="sticky-viewport">
-    <div id="horizontal-track">
+
+  
+    
 
 
 <!-- ══════════ WING I ══════════ -->
@@ -1523,61 +1495,13 @@ document.addEventListener('mousemove',e=>{
 
 // Sticky Horizontal Scroll Engine
 const track = document.getElementById('horizontal-track');
-const scrollContainer = document.getElementById('horizontal-scroll-container');
-
-function updateScrollDimensions() {
-    // Set --sw for perfect CSS math
-    const vw = document.documentElement.clientWidth;
-    document.documentElement.style.setProperty('--sw', vw + 'px');
-    
-    // Make container height = track width, so 1px scroll = 1px horizontal move
-    const trackWidth = track.scrollWidth;
-    scrollContainer.style.height = (trackWidth - vw + window.innerHeight) + 'px';
-}
-
-window.addEventListener('resize', updateScrollDimensions);
-setTimeout(updateScrollDimensions, 100);
-
-let currentTranslate = 0;
-window.addEventListener('scroll', () => {
-    const containerTop = scrollContainer.offsetTop;
-    let scrollPos = window.scrollY - containerTop;
-    
-    if (scrollPos < 0) scrollPos = 0;
-    
-    const maxScroll = scrollContainer.scrollHeight - window.innerHeight;
-    if (scrollPos > maxScroll) scrollPos = maxScroll;
-    
-    currentTranslate = -scrollPos;
-    track.style.transform = `translate3d(${currentTranslate}px, 0, 0)`;
-    
-    // progress bar logic (global)
-    const h = document.documentElement;
-    document.getElementById('prog').style.width = (window.scrollY/(h.scrollHeight-window.innerHeight)*100)+'%';
-}, {passive: true});
-
 // reveal on scroll (Vertical intro)
 const obs = new IntersectionObserver(es => {
     es.forEach(e => { if(e.isIntersecting) e.target.classList.add('on') });
 }, {threshold: .1});
 document.querySelectorAll('#vertical-intro .r').forEach(el => obs.observe(el));
 
-// reveal horizontal items (needs a different approach since they don't scroll normally)
-// We will just reveal all horizontal items on load for now, or when the track reaches them
-setTimeout(() => {
-    document.querySelectorAll('#horizontal-track .r').forEach(el => el.classList.add('on'));
-}, 500);
 
-// nav
-const dots = document.querySelectorAll('.nd');
-dots.forEach(d => {
-    d.addEventListener('click', () => {
-        const target = document.getElementById(d.dataset.s);
-        if(!target) return;
-        
-        // Is it in vertical?
-        if(target.closest('#vertical-intro')) {
-            target.scrollIntoView({behavior: 'smooth'});
         } else {
             // Is it horizontal?
             const targetLeft = target.offsetLeft;

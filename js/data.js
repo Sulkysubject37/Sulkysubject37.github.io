@@ -63,8 +63,8 @@ const portfolioData = {
         {
             title: "Everything You Love is an Algorithm",
             tech: "HTML, CSS, JS, Editorial Brutalism",
-            description: "A digital book exploring the intersection of algorithms, humanity, and system design. Features a custom hybrid horizontal-scroll architecture with strict book typography.",
-            cruelDescription: "A fully custom web-based book reading experience. Eschews standard vertical scrolling for a sticky horizontal pivot. Typography follows strict print typesetting rules because web text is usually unreadable slop.",
+            description: "A digital book exploring the intersection of algorithms, humanity, and system design. Features a pure, vertically-flowing reading experience with strict book typography.",
+            cruelDescription: "A fully custom web-based book reading experience. Eschews standard web layouts for a pure vertical editorial flow. Typography follows strict print typesetting rules because web text is usually unreadable slop.",
             link: "everything_you_love_is_an_algorithm.html"
         },
         {

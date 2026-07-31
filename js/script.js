@@ -141,7 +141,7 @@ function renderApp() {
                         It explores the failure of objective lenses when reality itself has been warped, how the machine's noise degrades our language, and the crisis of the individual navigating this manufactured society.
                     </p>
                     <p style="padding-left: 20px; border-left: 2px solid rgb(var(--accent-rgb)); font-family: var(--mono); font-size: 1.05rem; color: var(--text-muted); line-height: 1.6;">
-                        "Features a custom hybrid horizontal-scroll architecture. Typography follows strict print typesetting rules (justified alignment, auto-hyphenation) because standard web text is an unreadable compromise."
+                        "Typography follows strict print typesetting rules (justified alignment, auto-hyphenation) because standard web text is an unreadable compromise. Engineered for a pure, distraction-free vertical reading experience."
                     </p>
                 </div>
 
