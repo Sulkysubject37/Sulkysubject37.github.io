@@ -1574,6 +1574,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+
+    // Reveal all elements on scroll
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add('on');
+            }
+        });
+    }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.r').forEach(el => revealObserver.observe(el));
+
+    // Progress Bar
+    window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const width = (window.scrollY / (h.scrollHeight - window.innerHeight)) * 100;
+        document.getElementById('prog').style.width = width + '%';
+    });
+
     // BOOK UI LOGIC
     const wingLabel = document.getElementById('ui-wing-label');
     const pageLabel = document.getElementById('ui-page-label');
