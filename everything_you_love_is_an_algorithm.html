@@ -1493,25 +1493,7 @@ document.addEventListener('mousemove',e=>{
   document.documentElement.style.setProperty('--my',e.clientY+'px');
 });
 
-// Sticky Horizontal Scroll Engine
-const track = document.getElementById('horizontal-track');
-// reveal on scroll (Vertical intro)
-const obs = new IntersectionObserver(es => {
-    es.forEach(e => { if(e.isIntersecting) e.target.classList.add('on') });
-}, {threshold: .1});
-document.querySelectorAll('#vertical-intro .r').forEach(el => obs.observe(el));
 
-
-        } else {
-            // Is it horizontal?
-            const targetLeft = target.offsetLeft;
-            window.scrollTo({
-                top: scrollContainer.offsetTop + targetLeft,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
 
 // anti-copy keydown listener
 document.addEventListener('keydown', function(e) {
