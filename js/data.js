@@ -250,6 +250,14 @@ const portfolioData = {
     interests: [
         "Systems Programming", "Network Biology", "Quantum Computing", "Algorithmic Rigor", "Open Source"
     ],
+    theses: [
+        {
+            title: "Incompetence Is Not Malice",
+            date: "August 14, 2026",
+            summary: "A structural deconstruction of Hanlon's Razor. Blending evolutionary biology, neurobiology, and moral philosophy to analyze why human cognition systematically conflates systemic incompetence with intentional malice, and why this collapse produces profound epistemic failure.",
+            link: "incompetence_is_not_malice.html"
+        }
+    ],
     posts: [
         {
             title: "The Right to be Obsolete",

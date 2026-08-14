@@ -45,6 +45,7 @@ function renderApp() {
             <button class="nav-btn ${currentSection === 'profile' ? 'active' : ''}" onclick="switchSection('profile')">Profile</button>
             <button class="nav-btn ${currentSection === 'biozig' ? 'active' : ''}" onclick="switchSection('biozig')" style="color: rgba(var(--accent-rgb), 1); font-weight: bold;">BioZig Software Foundation</button>
             <button class="nav-btn ${currentSection === 'works' ? 'active' : ''}" onclick="switchSection('works')">Systems & Works</button>
+            <button class="nav-btn ${currentSection === 'theses' ? 'active' : ''}" onclick="switchSection('theses')">Theses</button>
             <button class="nav-btn ${currentSection === 'essays' ? 'active' : ''}" onclick="switchSection('essays')">Essays & Logs</button>
             <button class="nav-btn ${currentSection === 'book' ? 'active' : ''}" onclick="switchSection('book')" style="font-style: italic;">The Book</button>
             <button class="nav-btn ${currentSection === 'timeline' ? 'active' : ''}" onclick="switchSection('timeline')">Timeline & Pubs</button>
@@ -165,6 +166,15 @@ function renderApp() {
                 <div class="card-meta">LOG // ${p.date}</div>
                 <h3 class="card-title">${p.title}</h3>
                 <p class="card-desc">${p.summary}</p>
+            </article>
+        `);
+    } else if (currentSection === 'theses') {
+        html += buildSection('Theses', portfolioData.theses, (t) => `
+            <article class="card blog-card">
+                <a href="${t.link}" class="card-link" target="_blank"></a>
+                <div class="card-meta">THESIS // ${t.date}</div>
+                <h3 class="card-title">${t.title}</h3>
+                <p class="card-desc">${t.summary}</p>
             </article>
         `);
     } else if (currentSection === 'timeline') {
