@@ -252,6 +252,12 @@ const portfolioData = {
     ],
     theses: [
         {
+            title: "Why Good Systems Die?",
+            date: "August 26, 2026",
+            summary: "A theory of systemic rigidity and functional decoupling. Integrating bounded rationality, threshold models, and distributional coalitions to prove why intelligent agents collectively build un-killable, broken systems.",
+            link: "overgrowth_is_not_complexity.html"
+        },
+        {
             title: "Incompetence Is Not Malice",
             date: "August 14, 2026",
             summary: "A structural deconstruction of Hanlon's Razor. Blending evolutionary biology, neurobiology, and moral philosophy to analyze why human cognition systematically conflates systemic incompetence with intentional malice, and why this collapse produces profound epistemic failure.",
