@@ -61,6 +61,13 @@ const portfolioData = {
     ],
     projects: [
         {
+            title: "ON ~ A Series of Collaborative Inquiries",
+            tech: "HTML, CSS, JS, State-Aware Audio",
+            description: "A continuous, immersive editorial series that isolates historical and systemic subjects, extracting the brutal mechanisms beneath their polite narratives.",
+            cruelDescription: "An architecturally styled essay format built for absolute control. Features a custom ambient audio engine, strictly constrained CSS, and three mandatory editorial rules: every entry must name a mechanism, draft a ruthless auto-critique, and end on an unresolved question.",
+            link: "On.html"
+        },
+        {
             title: "Everything You Love is an Algorithm",
             tech: "HTML, CSS, JS, Editorial Brutalism",
             description: "A digital book exploring the intersection of algorithms, humanity, and system design. Features a pure, vertically-flowing reading experience with strict book typography.",

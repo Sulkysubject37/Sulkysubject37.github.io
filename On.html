@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ON ~ A Series of Collaborative Inquiries</title>
+<style>
+  :root {
+    --ink: #0c0b09;
+    --ink-2: #13110d;
+    --bone: #ece3cf;
+    --bone-dim: #9c9382;
+    --bone-faint: #6b6455;
+    --bronze: #b48b3f;
+    --bronze-dim: #7a5f2a;
+    --oxblood: #7a1f1f;
+    --rule: rgba(180, 139, 63, 0.26);
+    --rule-strong: rgba(180, 139, 63, 0.5);
+
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --mono: 'SF Mono', ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+
+    --container: 1200px;
+    --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--ink); }
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.65;
+    font-feature-settings: "onum" 1, "liga" 1, "kern" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Grain */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.92  0 0 0 0 0.85  0 0 0 0 0.72  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+  }
+
+  /* Vignette */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.45) 100%);
+  }
+
+  .wrap {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---------- TOP STRIP ---------- */
+  .topstrip {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--bone-faint);
+    padding: clamp(1.5rem, 3vw, 2.25rem) 0 1.1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .topstrip .dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--oxblood);
+    margin: 0 0.7em;
+    transform: translateY(-2px);
+  }
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead {
+    padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3rem, 7vw, 6rem);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: end;
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+  }
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: 1fr; align-items: start; }
+  }
+
+  .hero-left { position: relative; min-width: 0; }
+
+  .kicker {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--bronze);
+    margin-bottom: 0.85rem;
+    display: block;
+    letter-spacing: 0.01em;
+  }
+  .kicker::before {
+    content: "†";
+    margin-right: 0.6em;
+    font-style: normal;
+    color: var(--bronze-dim);
+  }
+
+  .display-on {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(10rem, 28vw, 24rem);
+    line-height: 0.76;
+    letter-spacing: -0.055em;
+    margin: 0;
+    color: var(--bone);
+    position: relative;
+    display: inline-block;
+    text-shadow:
+      0 -1px 0 rgba(0,0,0,0.9),
+      0 1px 0 rgba(255,255,255,0.045);
+  }
+  .display-on .o { color: var(--bronze); }
+  .display-on .n { color: var(--bone); }
+
+  /* the missing-object rule that runs off the right */
+  .hero-left::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0.13em;
+    width: 200vw;
+    height: 1px;
+    background: linear-gradient(90deg, var(--bronze) 0%, var(--bronze) 40%, transparent 100%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .hero-right {
+    padding-bottom: 0.75rem;
+    max-width: 44ch;
+  }
+  .hero-right p {
+    margin: 0;
+    color: var(--bone);
+    font-size: 1.05rem;
+    line-height: 1.62;
+  }
+  .hero-right .lead-word {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--bronze);
+    display: block;
+    margin-bottom: 0.7rem;
+  }
+  .hero-right em {
+    font-style: italic;
+    color: var(--bone);
+  }
+
+  /* ---------- ARGUMENT ---------- */
+  .argument {
+    padding: clamp(3rem, 8vw, 6rem) 0 clamp(3rem, 7vw, 5rem);
+    border-top: 1px solid var(--rule);
+    margin-top: clamp(3rem, 7vw, 5.5rem);
+    display: grid;
+    grid-template-columns: 1fr 2.1fr;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+  @media (max-width: 820px) {
+    .argument { grid-template-columns: 1fr; }
+  }
+  .argument .label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--bone-faint);
+    padding-top: 0.6rem;
+  }
+  .argument .body p {
+    font-size: clamp(1.1rem, 1.55vw, 1.28rem);
+    line-height: 1.62;
+    margin: 0 0 1.15em;
+    color: var(--bone);
+  }
+  .argument .body p:last-child { margin-bottom: 0; }
+  .argument .body p:first-child::first-letter {
+    font-family: var(--serif);
+    font-size: 3.9em;
+    float: left;
+    line-height: 0.82;
+    padding: 0.08em 0.14em 0 0;
+    color: var(--bronze);
+    font-weight: 400;
+  }
+
+  /* ---------- DIRECTIVES (full bleed) ---------- */
+  .directives {
+    background:
+      linear-gradient(180deg, rgba(180,139,63,0.035), transparent 30%, transparent 70%, rgba(180,139,63,0.035));
+    border-top: 1px solid var(--rule-strong);
+    border-bottom: 1px solid var(--rule-strong);
+    padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(3.5rem, 8vw, 6rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .directives-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--bronze);
+  }
+  .directives-head .count { color: var(--bone-faint); }
+
+  .directive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+  }
+  @media (max-width: 820px) {
+    .directive-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  .directive {
+    position: relative;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--bronze);
+  }
+
+  .directive .numeral {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--bronze);
+    display: block;
+    margin-bottom: 1.35rem;
+    letter-spacing: 0.06em;
+  }
+  .directive h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.35rem, 2.1vw, 1.65rem);
+    line-height: 1.15;
+    color: var(--bone);
+    margin: 0 0 0.85rem;
+    letter-spacing: -0.005em;
+  }
+  .directive h3 em {
+    font-style: italic;
+    color: var(--bronze);
+  }
+  .directive p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--bone-dim);
+    margin: 0;
+  }
+
+  /* ---------- ENTRY SLAB (inverted) ---------- */
+  .entry-slab {
+    background: var(--bone);
+    color: var(--ink);
+    padding: clamp(3.5rem, 8vw, 6.5rem) 0;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .entry-slab::before {
+    /* monumental background numeral */
+    content: "I";
+    position: absolute;
+    right: -0.15em;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--serif);
+    font-size: clamp(20rem, 46vw, 42rem);
+    line-height: 1;
+    color: rgba(107, 28, 28, 0.07);
+    z-index: 0;
+    pointer-events: none;
+    font-weight: 400;
+  }
+  .entry-slab .wrap { position: relative; z-index: 1; }
+
+  .entry-slab .label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    display: block;
+    margin-bottom: 1.75rem;
+  }
+  .entry-slab h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin: 0 0 2rem;
+  }
+  .entry-slab h2 em {
+    font-style: italic;
+    color: var(--oxblood);
+  }
+  .entry-slab .blurb {
+    max-width: 62ch;
+    font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+    line-height: 1.62;
+    color: #2a251c;
+    margin: 0 0 2.5rem;
+  }
+  .entry-slab .blurb em {
+    font-style: italic;
+    color: var(--oxblood);
+  }
+  .entry-slab .cta {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--oxblood);
+    padding-bottom: 0.5rem;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .entry-slab .cta:hover {
+    color: var(--oxblood);
+    border-color: var(--ink);
+  }
+  .entry-slab .cta::after {
+    content: "→";
+    font-family: var(--serif);
+    font-size: 1.15em;
+    transition: transform 0.25s;
+  }
+  .entry-slab .cta:hover::after { transform: translateX(5px); }
+
+  /* ---------- INDEX ---------- */
+  .index-section {
+    padding: clamp(3.5rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 4rem);
+  }
+  .index-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--bronze);
+  }
+  .index-head .count { color: var(--bone-faint); }
+
+  .index-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .index-list li {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: 1.6rem 0;
+    border-bottom: 1px solid rgba(12, 11, 9, 0.1);
+    align-items: baseline;
+  }
+  .index-list li:last-child { border-bottom: none; }
+  @media (max-width: 620px) {
+    .index-list li { grid-template-columns: 2.75rem 1fr; gap: 1rem; }
+  }
+  .index-list .num {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--oxblood);
+    letter-spacing: 0.06em;
+  }
+  .index-list .title {
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0 0 0.45rem;
+    letter-spacing: -0.005em;
+  }
+  .index-list .desc {
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: rgba(12, 11, 9, 0.65);
+    margin: 0;
+  }
+  .index-list li.special {
+    background: linear-gradient(90deg, rgba(122,31,31,0.06), transparent 80%);
+    border-radius: 4px;
+    padding: 1.6rem 1.5rem;
+    margin-left: -1.5rem;
+  }
+  .index-list li.special .num { color: var(--oxblood); font-weight: bold; }
+
+  /* ---------- COLOPHON ---------- */
+  .colophon {
+    padding: clamp(3rem, 7vw, 5rem) 0 clamp(3.5rem, 6vw, 5rem);
+    border-top: 1px solid var(--rule-strong);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    align-items: baseline;
+  }
+  @media (max-width: 740px) {
+    .colophon { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  .colophon .motto {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+    line-height: 1.5;
+    color: var(--bone);
+    margin: 0;
+    max-width: 36ch;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--bronze);
+  }
+  .colophon .meta {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--bone-faint);
+    text-align: right;
+    line-height: 2.2;
+  }
+  @media (max-width: 740px) {
+    .colophon .meta { text-align: left; }
+  }
+  .colophon .meta a {
+    color: var(--bone-dim);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .colophon .meta a:hover {
+    color: var(--bronze);
+    border-color: var(--bronze);
+  }
+
+  ::selection {
+    background: var(--bronze);
+    color: var(--ink);
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <!-- ============ TOP STRIP ============ -->
+    <div class="topstrip">
+      <span>ON<span class="dot"></span>A Series of Collaborative Inquiries</span>
+      <span>Vol. I<span class="dot"></span>Entry I</span>
+    </div>
+
+    <!-- ============ MASTHEAD ============ -->
+    <header class="masthead">
+      <div class="hero">
+        <div class="hero-left">
+          <span class="kicker">The Series</span>
+          <h1 class="display-on"><span class="o">O</span><span class="n">N</span></h1>
+        </div>
+        <div class="hero-right">
+          <p>
+            <span class="lead-word">Definition ~ Negative</span>
+            <em>ON</em> is a preposition without an object. It implies
+            relation, direction, continuation ~ but it never arrives.
+            This series isolates subjects ~ historical, psychological,
+            systemic ~ and extracts the mechanism beneath each one.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ ARGUMENT ============ -->
+    <section class="argument">
+      <div class="label">The Premise</div>
+      <div class="body">
+        <p>
+          The polite version of any subject is already installed in your
+          head. The marble. The anthem. The founding date. The portrait,
+          relit every few decades for a new generation of admirers. The
+          polite version is not the subject. It is a rendering ~
+          optimized for the audience it was built to please, and not for
+          accuracy.
+        </p>
+        <p>
+          Underneath sits the mechanism: a transfer function that
+          converts an input into an outcome it was never meant to
+          produce. Every essay in this series must name one ~ in a
+          single sentence, structural enough to be tested and specific
+          enough to be falsified. Introductions flatter their subject.
+          These are dissections. The subject is usually still alive when
+          we begin.
+        </p>
+      </div>
+    </section>
+  </div> <!-- end wrap -->
+
+  <!-- ============ DIRECTIVES ============ -->
+  <section class="directives">
+    <div class="wrap">
+      <div class="directives-head">
+        <span>Editorial Directives</span>
+        <span class="count">Three Rules ~ No Exceptions</span>
+      </div>
+      <div class="directive-grid">
+        <div class="directive">
+          <span class="numeral">I.</span>
+          <h3>Name a <em>Mechanism</em></h3>
+          <p>
+            The essay must isolate the specific transfer function of
+            how A becomes B. Not a theme. Not a motif. A mechanism
+            that can be pointed to, tested, and found wanting.
+          </p>
+        </div>
+        <div class="directive">
+          <span class="numeral">II.</span>
+          <h3>Draft the <em>Objection</em></h3>
+          <p>
+            Every argument must contain its own strongest
+            counter-argument, written as if by an enemy. No straw
+            men. No cheap wins. If you cannot write the case against
+            yourself, you do not yet know your own case.
+          </p>
+        </div>
+        <div class="directive">
+          <span class="numeral">III.</span>
+          <h3>End <em>Open</em></h3>
+          <p>
+            The essay must conclude with an unresolved,
+            non-rhetorical question. The series moves forward by
+            accumulating unfinished inquiries ~ not final verdicts.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY I SLAB ============ -->
+  <section class="entry-slab">
+    <div class="wrap">
+      <span class="label">Entry I ~ Solo Pilot</span>
+      <h2>On <em>Rome</em></h2>
+      <p class="blurb">
+        Rome was not built on grandeur. It was built on a single,
+        unhealed wound: the murder of the equal, the theft of the
+        foreign, and the eternal repetition of the crime that made
+        the city possible. This essay traces one mechanism ~ the
+        family-ego as container, <em>dignitas</em> as currency,
+        <em>imperium</em> as prize ~ from the fratricide of Romulus
+        to the slow erasure of the East as "Byzantine."
+      </p>
+
+      <!-- ============ NESTED INDEX ============ -->
+      <div class="index-section" style="padding: 1.5rem 0 3rem; max-width: 65ch;">
+        <div class="index-head" style="margin-bottom: 2rem;">
+          <span>Movements of On Rome</span>
+          <span class="count">VII Parts</span>
+        </div>
+        <ol class="index-list">
+          <li>
+            <span class="num">I</span>
+            <div>
+              <p class="title">The Origin Code</p>
+              <p class="desc">Romulus over Remus ~ the founding murder as architectural blueprint.</p>
+            </div>
+          </li>
+          <li>
+            <span class="num">II</span>
+            <div>
+              <p class="title">The Theatrical Ritual</p>
+              <p class="desc">The arena as public re-enactment of the crime the city cannot forget.</p>
+            </div>
+          </li>
+          <li>
+            <span class="num">III</span>
+            <div>
+              <p class="title">The Return of the Repressed</p>
+              <p class="desc">Civil war, Cleopatra, and the fraternal rivalry that ended the Republic.</p>
+            </div>
+          </li>
+          <li>
+            <span class="num">IV</span>
+            <div>
+              <p class="title">The Institution of the Knife</p>
+              <p class="desc">Praetorians, succession crises, and the emperor as the last surviving brother.</p>
+            </div>
+          </li>
+          <li>
+            <span class="num">V</span>
+            <div>
+              <p class="title">The Fracture and the Renaming</p>
+              <p class="desc">East, West, and the 16th-century erasure that made "Byzantine" a word.</p>
+            </div>
+          </li>
+          <li class="special">
+            <span class="num">VI</span>
+            <div>
+              <p class="title">The Objection</p>
+              <p class="desc">The strongest argument against this essay ~ delivered as a ruthless auto-critique.</p>
+            </div>
+          </li>
+          <li class="special">
+            <span class="num">VII</span>
+            <div>
+              <p class="title">The Open Question</p>
+              <p class="desc">What this essay cannot answer. The door left open for the next entry.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <a class="cta" href="On-Rome.html">Read the Essay</a>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <!-- ============ COLOPHON ============ -->
+    <footer class="colophon">
+      <p class="motto">
+        ON is a preposition without an object. It never arrives.
+      </p>
+      <div class="meta">
+        <div>Open Call ~ Entry II</div>
+        <div><a href="mailto:arshad10867c@gmail.com">Submit a Proposal</a></div>
+        <div><a href="On-Rome.html">Begin with Rome →</a></div>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>
