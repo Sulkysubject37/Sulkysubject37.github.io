@@ -10,3 +10,6 @@ node_modules/
 v4-wasm/.zig-cache/
 v4-wasm/zig-out/
 v4-deploy/
+
+systems_mp/
+incomp_synth/

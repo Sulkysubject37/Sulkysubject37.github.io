@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELP // Scripts & Pipelines</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Instrument+Sans:wght@300;400;500&family=JetBrains+Mono:wght@100;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Randomizer Logic for Theme and Layout -->
+    <script>
+        const themes = ['oat', 'matcha', 'rose', 'slate', 'sand', 'midnight', 'plum', 'sage', 'sepia', 'abyss'];
+        const newTheme = themes[Math.floor(Math.random() * themes.length)];
+        document.documentElement.setAttribute('data-theme', newTheme);
+        document.documentElement.setAttribute('data-layout', 'layout-a');
+    </script>
+    <style>
+        .help-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 40px;
+        }
+        .help-header {
+            font-family: var(--serif);
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        .script-block {
+            margin-bottom: 4rem;
+        }
+        .script-title {
+            font-family: var(--sans);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        pre {
+            background-color: var(--bg-alt);
+            padding: 2rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border: 1px solid var(--border-color);
+        }
+        code {
+            color: var(--text-main);
+        }
+        .nav-back {
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-family: var(--sans);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            color: var(--text-muted);
+            border-bottom: 1px solid transparent;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+        .nav-back:hover {
+            color: var(--text-main);
+            border-bottom: 1px solid var(--text-main);
+        }
+    </style>
+</head>
+<body>
+    <div id="fluid-bg"></div>
+
+    <div class="help-container">
+        <a href="index.html" class="nav-back">← Back to Portfolio</a>
+        
+        <h1 class="help-header">HELP / Scripts</h1>
+        
+        <div class="script-block">
+            <h2 class="script-title">deg.R</h2>
+            <pre><code>library(DESeq2); library(ggplot2); library(pheatmap); library(ggrepel)
+
+# 1. Load Data & Run DESeq2
+counts <- read.table("count_matrix.txt", header=T, row.names=1, sep="\t")
+sample_info <- data.frame(condition = factor(rep(c("Healthy", "SALS"), c(8, 10)),
+  levels=c("Healthy", "SALS")), row.names = colnames(counts))
+dds <- DESeq(DESeqDataSetFromMatrix(counts, sample_info, ~condition))
+res_df <- as.data.frame(results(dds, contrast=c("condition", "SALS", "Healthy")))
+res_df <- na.omit(cbind(Gene=rownames(res_df), res_df))
+res_df$Sig <- ifelse(res_df$padj < 0.05 & res_df$log2FoldChange > 1, "Up",
+  ifelse(res_df$padj < 0.05 & res_df$log2FoldChange < -1, "Down", "Not Sig"))
+
+# 2. Volcano Plot
+ggplot(res_df, aes(log2FoldChange, -log10(padj), color=Sig)) + geom_point(alpha=0.8) +
+  scale_color_manual(values=c("Down"="blue", "Not Sig"="grey", "Up"="red")) +
+  theme_minimal() +
+  geom_text_repel(data=subset(res_df, Sig != "Not Sig"), aes(label=Gene), size=3,
+  show.legend=F)
+ggsave("Volcano_Plot.png", width=8, height=6)
+
+# 3. PCA Plot
+vsd <- vst(dds, blind=FALSE)
+ggsave("/Users/sulky/Downloads/PCA_Plot.png", plotPCA(vsd, intgroup="condition") +
+  theme_minimal(), width=7, height=5)
+
+# 4. Heatmap
+sig_genes <- subset(res_df, Sig != "Not Sig")$Gene
+if(length(sig_genes) > 0) {
+  pheatmap(assay(vsd)[sig_genes, ], scale="row", annotation_col=sample_info,
+  show_colnames=F,
+           filename="Heatmap_DEGs.png", width=8, height=6)
+}
+cat("Plots generated successfully in Downloads folder.\n")
+</code></pre>
+        </div>
+
+        <div class="script-block">
+            <h2 class="script-title">ngs_pipeline.sh</h2>
+            <pre><code>#!/bin/bash
+# Exit immediately if a command exits with a non-zero status
+set -e 
+
+# ==========================================
+# CONFIGURATION (Change these paths!)
+# ==========================================
+READ1="sample_R1.fastq.gz"
+READ2="sample_R2.fastq.gz"
+REF_GENOME="reference.fasta"
+OUT_DIR="./ngs_output"
+THREADS=4
+
+# Create output directories
+mkdir -p ${OUT_DIR}/{fastqc_raw,fastqc_trimmed,trimmed,aligned}
+
+echo "Starting NGS Pipeline..."
+
+# ==========================================
+# 1. Pre-trimming Quality Control (FastQC)
+# ==========================================
+echo "[1/6] Running FastQC on raw reads..."
+fastqc -t ${THREADS} -o ${OUT_DIR}/fastqc_raw ${READ1} ${READ2}
+
+# ==========================================
+# 2. Adapter Trimming (Trimmomatic)
+# ==========================================
+# Note: Path to TruSeq3-PE.fa depends on your Trimmomatic installation
+echo "[2/6] Running Trimmomatic..."
+trimmomatic PE -threads ${THREADS} \
+  ${READ1} ${READ2} \
+  ${OUT_DIR}/trimmed/paired_R1.fq.gz ${OUT_DIR}/trimmed/unpaired_R1.fq.gz \
+  ${OUT_DIR}/trimmed/paired_R2.fq.gz ${OUT_DIR}/trimmed/unpaired_R2.fq.gz \
+  ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+# ==========================================
+# 3. Post-trimming Quality Control (FastQC)
+# ==========================================
+echo "[3/6] Running FastQC on trimmed reads..."
+fastqc -t ${THREADS} -o ${OUT_DIR}/fastqc_trimmed \
+  ${OUT_DIR}/trimmed/paired_R1.fq.gz ${OUT_DIR}/trimmed/paired_R2.fq.gz
+
+# ==========================================
+# 4. Alignment & SAM Generation (BWA-MEM)
+# ==========================================
+echo "[4/6] Aligning reads to reference genome..."
+bwa mem -t ${THREADS} ${REF_GENOME} \
+  ${OUT_DIR}/trimmed/paired_R1.fq.gz ${OUT_DIR}/trimmed/paired_R2.fq.gz \
+  > ${OUT_DIR}/aligned/sample_aligned.sam
+
+# ==========================================
+# 5. Convert SAM to BAM, Sort, and Index (Samtools)
+# ==========================================
+# BAM is the compressed binary version of SAM. Sorting is required for most tools.
+echo "[5/6] Converting to BAM, sorting, and indexing..."
+samtools view -@ ${THREADS} -bS ${OUT_DIR}/aligned/sample_aligned.sam > ${OUT_DIR}/aligned/sample_aligned.bam
+samtools sort -@ ${THREADS} -o ${OUT_DIR}/aligned/sample_sorted.bam ${OUT_DIR}/aligned/sample_aligned.bam
+samtools index ${OUT_DIR}/aligned/sample_sorted.bam
+
+# Optional cleanup to save space: remove the massive SAM file
+rm ${OUT_DIR}/aligned/sample_aligned.sam
+
+# Index the final BAM
+samtools index ${OUT_DIR}/aligned/sample_dedup.bam
+
+echo "Pipeline Finished Successfully!"
+</code></pre>
+        </div>
+    </div>
+</body>
+</html>

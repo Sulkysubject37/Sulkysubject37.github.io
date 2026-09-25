@@ -61,6 +61,13 @@ const portfolioData = {
     ],
     projects: [
         {
+            title: "HELP // Scripts & Pipelines",
+            tech: "R, Bash, Bioinformatics",
+            description: "A dedicated repository page containing standard operating procedures and functional scripts, including automated NGS processing pipelines and Differential Expression (DESeq2) templates.",
+            cruelDescription: "Raw infrastructure. An automated bash script for parsing raw FASTQ data to aligned BAMs, and an R script for spitting out Volcano plots and Heatmaps without hallucinating. Code over narrative.",
+            link: "HELP.html"
+        },
+        {
             title: "ON ~ A Series of Collaborative Inquiries",
             tech: "HTML, CSS, JS, State-Aware Audio",
             description: "A continuous, immersive editorial series that isolates historical and systemic subjects, extracting the brutal mechanisms beneath their polite narratives.",
