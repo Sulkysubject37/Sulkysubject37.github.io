@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>On Schrödinger ~ The Geometry of Wave Reality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --wien-black: #0b0d0e;
+  --wien-slate: #121619;
+  --wien-board: #161c20;
+  --loden-deep: #16221c;
+  
+  --gold: #c69f4e;
+  --gold-dim: rgba(198, 159, 78, 0.2);
+  --gold-faint: rgba(198, 159, 78, 0.08);
+  --gold-bright: #dfb76c;
+  
+  --wax: #8b2323;
+  --wax-dim: rgba(139, 35, 35, 0.25);
+  
+  --bone: #f5eedf;
+  --bone-dim: #b8b0a0;
+  --bone-faint: #6c665d;
+  
+  --fraktur: 'UnifrakturMaguntia', serif;
+  --antiqua: 'Old Standard TT', 'Cormorant Garamond', Georgia, serif;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  background: var(--wien-black);
+  color: var(--bone);
+  font-family: var(--antiqua);
+  overflow-x: hidden;
+  line-height: 1.76;
+  font-size: 19px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* Reading Progress Indicator */
+#prog {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0;
+  z-index: 9999;
+  background: linear-gradient(90deg, var(--gold), var(--wax), var(--gold-bright));
+  transition: width .06s linear;
+}
+
+/* Authentic Letterpress Paper Texture */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9990;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.85 0 0 0 0 0.72 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+/* Navigation Rail */
+#nav {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.nd {
+  width: 5px;
+  height: 5px;
+  background: rgba(245, 238, 223, 0.2);
+  border: 1px solid rgba(198, 159, 78, 0.35);
+  cursor: pointer;
+  transition: all .25s ease;
+  position: relative;
+}
+.nd::before {
+  content: attr(data-label);
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.nd:hover::before {
+  opacity: 1;
+  transform: translateY(-50%) translateX(-4px);
+}
+.nd.on {
+  background: var(--gold);
+  height: 18px;
+  border-color: var(--gold-bright);
+}
+@media(max-width: 960px){ #nav { display: none; } }
+
+/* Top Header Bar */
+.topstrip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  padding: 1.4rem clamp(24px, 6vw, 60px);
+  border-bottom: 2px solid var(--gold);
+  background: rgba(11, 13, 14, 0.96);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.topstrip a { color: inherit; text-decoration: none; transition: color .2s ease; }
+.topstrip a:hover { color: var(--gold); }
+.topstrip-insignia {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.topstrip-insignia .rosette {
+  width: 8px;
+  height: 8px;
+  background: var(--wax);
+  border: 1px solid var(--gold);
+  transform: rotate(45deg);
+}
+
+/* ══════════ WIENER SECESSION FRONTISPIECE ══════════ */
+#frontispiece {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8vh 0 6vh;
+  position: relative;
+  background: radial-gradient(circle at 50% 25%, #18221c 0%, #0b0d0e 80%);
+  border-bottom: 3px double var(--gold);
+}
+
+.monograph-frame {
+  max-width: 1080px;
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid var(--gold);
+  padding: clamp(24px, 5vw, 48px);
+  position: relative;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.8), inset 0 0 60px rgba(0,0,0,0.4);
+}
+/* Corner Josef Hoffmann Quadrats */
+.corner-q {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--gold);
+  background: var(--wien-black);
+}
+.q-tl { top: -7px; left: -7px; }
+.q-tr { top: -7px; right: -7px; }
+.q-bl { bottom: -7px; left: -7px; }
+.q-br { bottom: -7px; right: -7px; }
+
+.monograph-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+@media (max-width: 840px) {
+  .monograph-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.copperplate-frame {
+  background: #111417;
+  border: 2px solid var(--gold);
+  padding: 12px 12px 24px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+  position: relative;
+}
+@media (max-width: 840px) {
+  .copperplate-frame {
+    max-width: 260px;
+    margin: 0 auto 1.5rem;
+  }
+}
+.copperplate-frame::after {
+  content: "KGL. SCHWEDISCHE AKADEMIE DER WISSENSCHAFTEN";
+  display: block;
+  font-family: var(--mono);
+  font-size: 7.5px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  text-align: center;
+  margin-top: 10px;
+  border-top: 1px solid rgba(198, 159, 78, 0.3);
+  padding-top: 8px;
+}
+.portrait-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: sepia(18%) grayscale(85%) contrast(110%);
+  border: 1px solid rgba(0,0,0,0.8);
+}
+.portrait-legend {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  text-align: center;
+}
+.portrait-legend b {
+  font-family: var(--antiqua);
+  font-size: 15px;
+  color: var(--bone);
+  display: block;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.fraktur-lead {
+  font-family: var(--fraktur);
+  font-size: clamp(24px, 3.5vw, 36px);
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+.monograph-title {
+  font-family: var(--antiqua);
+  font-weight: 700;
+  font-size: clamp(48px, 8vw, 98px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--bone);
+  text-transform: uppercase;
+  margin-bottom: 1.4rem;
+}
+.monograph-title span {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  text-transform: none;
+}
+.monograph-sub {
+  font-family: var(--serif);
+  font-size: clamp(19px, 2.2vw, 24px);
+  font-style: italic;
+  color: var(--bone-dim);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  max-width: 620px;
+}
+
+.frieze-rule {
+  height: 12px;
+  background-image: repeating-linear-gradient(90deg, 
+    var(--gold) 0, var(--gold) 4px, 
+    transparent 4px, transparent 8px, 
+    var(--gold) 8px, var(--gold) 12px, 
+    transparent 12px, transparent 20px
+  );
+  opacity: 0.4;
+  margin: 2rem 0;
+}
+
+.monograph-imprint {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  border-top: 1px solid var(--gold);
+  padding-top: 1.2rem;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bone-faint);
+}
+.monograph-imprint span em {
+  font-style: normal;
+  color: var(--bone);
+}
+
+/* ══════════ ASYMMETRICAL GERMANIC FOLIO ══════════ */
+.act-container {
+  border-bottom: 1px solid rgba(198, 159, 78, 0.25);
+  position: relative;
+}
+
+.act-band {
+  background: var(--wien-slate);
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  padding: 0.85rem clamp(24px, 6vw, 60px);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  position: sticky;
+  top: 48px;
+  z-index: 800;
+  backdrop-filter: blur(8px);
+}
+.act-band-title {
+  color: var(--gold);
+  font-weight: 600;
+}
+.act-band-meta {
+  color: var(--bone-faint);
+}
+
+.folio-layout {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 80px clamp(24px, 5vw, 40px) 100px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(260px, 1fr);
+  gap: clamp(36px, 6vw, 72px);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .folio-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.main-col { position: relative; }
+
+.act-gate {
+  margin-bottom: 2.8rem;
+  padding-bottom: 1.8rem;
+  border-bottom: 1px solid rgba(198, 159, 78, 0.2);
+}
+.act-gate-num {
+  font-family: var(--fraktur);
+  font-size: 26px;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.act-gate-h {
+  font-family: var(--antiqua);
+  font-weight: 700;
+  font-size: clamp(32px, 4.8vw, 50px);
+  line-height: 1.1;
+  color: var(--bone);
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.act-gate-h em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+.act-gate-deck {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(18px, 2.1vw, 22px);
+  color: var(--bone-dim);
+  line-height: 1.52;
+}
+
+.p {
+  font-size: 20px;
+  line-height: 1.84;
+  margin-bottom: 1.8rem;
+  font-weight: 400;
+  color: #dfd8cc;
+}
+.p em { font-style: italic; color: #fff; }
+.p b { font-weight: 700; color: #fff; }
+
+.drop-fraktur::first-letter {
+  font-family: var(--fraktur);
+  font-size: 4.6em;
+  float: left;
+  line-height: 0.8;
+  padding: 0.08em 0.15em 0 0;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+}
+
+.secession-quote {
+  border: 1px solid var(--gold);
+  padding: 2.2rem;
+  margin: 3.2rem 0;
+  background: rgba(198, 159, 78, 0.04);
+  position: relative;
+}
+.secession-quote::before {
+  content: "„";
+  position: absolute;
+  top: -24px;
+  left: 20px;
+  font-family: var(--antiqua);
+  font-size: 60px;
+  color: var(--gold);
+  background: var(--wien-black);
+  padding: 0 8px;
+  line-height: 1;
+}
+.secession-quote p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(21px, 2.7vw, 28px);
+  line-height: 1.45;
+  color: var(--bone);
+  margin: 0;
+}
+.secession-quote cite {
+  display: block;
+  margin-top: 1.2rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-style: normal;
+}
+
+.plaque-math {
+  background: #0f1215;
+  border-left: 3px solid var(--gold);
+  border-top: 1px solid rgba(198, 159, 78, 0.2);
+  border-right: 1px solid rgba(198, 159, 78, 0.2);
+  border-bottom: 1px solid rgba(198, 159, 78, 0.2);
+  padding: 1.6rem 2rem;
+  margin: 2.6rem 0;
+}
+.plaque-tag {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+}
+.plaque-eq {
+  font-family: var(--antiqua);
+  font-size: clamp(20px, 2.4vw, 25px);
+  font-style: italic;
+  color: var(--bone);
+  text-align: center;
+  padding: 0.6rem 0;
+  letter-spacing: 0.02em;
+}
+
+/* Marginalia (Randglossen) Column */
+.randglosse-col {
+  position: relative;
+  border-left: 1px solid rgba(198, 159, 78, 0.25);
+  padding-left: clamp(18px, 3vw, 28px);
+}
+@media (max-width: 900px) {
+  .randglosse-col {
+    border-left: none;
+    border-top: 1px solid rgba(198, 159, 78, 0.25);
+    padding-left: 0;
+    padding-top: 2rem;
+  }
+}
+
+.glosse-card {
+  background: rgba(24, 29, 33, 0.6);
+  border: 1px solid rgba(198, 159, 78, 0.25);
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.glosse-card::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 5px;
+  height: 5px;
+  background: var(--gold);
+}
+.glosse-header {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(198, 159, 78, 0.15);
+  padding-bottom: 0.4rem;
+}
+.glosse-body {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--bone-dim);
+}
+.glosse-body b {
+  color: var(--bone);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.glosse-quote {
+  font-style: italic;
+  color: var(--bone);
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.austrian-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2.5rem 0;
+  font-size: 16px;
+}
+.austrian-table th, .austrian-table td {
+  border: 1px solid rgba(198, 159, 78, 0.25);
+  padding: 12px 16px;
+  text-align: left;
+}
+.austrian-table th {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: rgba(198, 159, 78, 0.08);
+  color: var(--gold);
+}
+.austrian-table td {
+  font-family: var(--serif);
+  color: var(--bone-dim);
+}
+.austrian-table td b { color: var(--bone); }
+
+.apparatus-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 90px clamp(24px, 5vw, 40px) 120px;
+  border-top: 3px double var(--gold);
+  background: #08090a;
+}
+.apparatus-head {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.apparatus-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.3;
+}
+.ref-list {
+  list-style: none;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.9;
+  color: var(--bone-dim);
+}
+.ref-list li {
+  margin-bottom: 1.2rem;
+  padding-left: 2.6rem;
+  position: relative;
+}
+.ref-list li::before {
+  content: "§ " counter(ref-counter);
+  counter-increment: ref-counter;
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+.ref-list { counter-reset: ref-counter; }
+.ref-list em { color: var(--bone); }
+.ref-list a { color: var(--bone); text-decoration: none; border-bottom: 1px dotted var(--gold); }
+.ref-list a:hover { color: var(--gold); }
+
+.r {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.r.on {
+  opacity: 1;
+  transform: none;
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- NAVIGATION RAIL -->
+<nav id="nav">
+  <button class="nd on" data-s="frontispiece" data-label="Frontispiece"></button>
+  <button class="nd" data-s="act1" data-label="I · The Isonzo Front"></button>
+  <button class="nd" data-s="act2" data-label="II · The Eigenvalue Problem"></button>
+  <button class="nd" data-s="act3" data-label="III · Nodal Topology"></button>
+  <button class="nd" data-s="act4" data-label="IV · The Berlin Rupture"></button>
+  <button class="nd" data-s="act5" data-label="V · What Is Life?"></button>
+  <button class="nd" data-s="act6" data-label="VI · The Weaponized Cat"></button>
+  <button class="nd" data-s="act7" data-label="VII · The Vedantic Monist"></button>
+  <button class="nd" data-s="coda" data-label="Coda"></button>
+  <button class="nd" data-s="refs" data-label="Apparatus"></button>
+</nav>
+
+<!-- TOP STRIP -->
+<header class="topstrip">
+  <div class="topstrip-insignia">
+    <div class="rosette"></div>
+    <span>SERIES: ON · WIENER ABHANDLUNGEN</span>
+    <span style="opacity: 0.3;">/</span>
+    <span>ENTRY II ~ ERWIN SCHRÖDINGER</span>
+  </div>
+  <div>
+    <a href="On.html">SERIES: ON &larr;</a>
+    <span style="margin: 0 8px; opacity: 0.3;">|</span>
+    <a href="On-Rome.html">ENTRY I (ROME) &rarr;</a>
+  </div>
+</header>
+
+<!-- ══════════ FRONTISPIECE ══════════ -->
+<section id="frontispiece">
+  <div class="monograph-frame r">
+    <div class="corner-q q-tl"></div>
+    <div class="corner-q q-tr"></div>
+    <div class="corner-q q-bl"></div>
+    <div class="corner-q q-br"></div>
+
+    <div class="monograph-grid">
+      
+      <!-- Copperplate Archival Portrait -->
+      <div class="copperplate-frame">
+        <img src="assets/schrodinger_1933.jpg" alt="Erwin Schrödinger, Stockholm, 1933" class="portrait-img">
+        <div class="portrait-legend">
+          <b>Dr. Erwin Schrödinger</b>
+          <span>Vienna 1887 ~ Alpbach 1961</span>
+          <div style="font-size: 8px; color: var(--gold); margin-top: 4px;">STOCKHOLM · NOBEL LAUREATE 1933</div>
+        </div>
+      </div>
+
+      <!-- Germanic Title Frieze -->
+      <div>
+        <span class="fraktur-lead">Eine Wiener Abhandlung</span>
+        <h1 class="monograph-title">ON <span>SCHRÖDINGER</span></h1>
+        <p class="monograph-sub">
+          The artillery officer, the Alpine eigenvalue problem, the architect of atomic chemistry ~ and the anti-Copenhagen satire that popular culture degraded into a household mascot.
+        </p>
+
+        <div class="frieze-rule"></div>
+
+        <div class="monograph-imprint">
+          <span>Author: <em>MD. Arshad</em></span>
+          <span>Axis: <em>Vienna · Arosa · Berlin · Dublin</em></span>
+          <span>Signature: <em>DIAS-MS-1943-AT</em></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ACT I: THE TRENCHES AND BOLTZMANN'S GHOST ══════════ -->
+<section id="act1" class="act-container">
+  <div class="act-band">
+    <span class="act-band-title">Act I · The Isonzo Front</span>
+    <span class="act-band-meta">1914~1921 · From the Triestine Karst to Hasenöhrl’s Ghost</span>
+  </div>
+
+  <div class="folio-layout">
+    
+    <div class="main-col">
+      <div class="act-gate r">
+        <span class="act-gate-num">I.</span>
+        <h2 class="act-gate-h">Before the Equation, There Was<br>the <em>Mud of Gorizia.</em></h2>
+        <p class="act-gate-deck">
+          Anglo-American mythology frames quantum mechanics as an immaculate conception of Göttingen seminar rooms. Schrödinger began in the artillery dugouts of the Austro-Hungarian army, reading Arthur Schopenhauer by carbide lamp while Italian howitzers pulverized the limestone ridge.
+        </p>
+      </div>
+
+      <p class="p drop-fraktur r">
+        Erwin Rudolf Josef Alexander Schrödinger was born in Erdberg, Vienna, on August 12, 1887. He was not a product of Prussian administrative asceticism, but of the saturated, hyper-cultivated twilight of the Habsburg Empire. His father, Rudolf Schrödinger, was an oilcloth manufacturer and botanist; his maternal grandmother, Emily Russell, was English, rendering him completely bilingual from infancy. At the II. Institute of Physics at the University of Vienna, Schrödinger was formed by Franz Serafin Exner and Fritz Hasenöhrl ~ the chosen intellectual heir of Ludwig Boltzmann.
+      </p>
+
+      <p class="p r">
+        From Boltzmann and Hasenöhrl, Schrödinger inherited an absolute ontological imperative: physics is not an empirical ledger of disjointed accidents; it is the mathematical articulation of continuous statistical and dynamical fields. When the Great War erupted, Hasenöhrl took command of an infantry battalion and was killed on October 7, 1915, by a grenade on Mount Plaut in South Tyrol. The loss permanently scarred Schrödinger. To the end of his life, Schrödinger maintained that had Hasenöhrl survived the trenches, it would have been Hasenöhrl, not himself, standing in Stockholm in 1933.
+      </p>
+
+      <div class="secession-quote r">
+        <p>
+          „Had Hasenöhrl not fallen in the war, it would have been he who received the Nobel Prize for the foundation of wave mechanics.“
+        </p>
+        <cite>Erwin Schrödinger ~ Address to the Prussian Academy of Sciences, Berlin, 1928</cite>
+      </div>
+
+      <p class="p r">
+        Commissioned as an artillery lieutenant in the k.u.k. Festungsartillerie, Schrödinger served on the brutal Italian front ~ commanding fortress batteries at Görz (Gorizia), Duino, and Prosecco. Decorated with the Military Merit Cross with War Decoration for holding battery positions under heavy bombardment, he filled his trench notebooks not merely with firing angles and trajectory corrections, but with rigorous studies of Baruch Spinoza’s <em>Ethics</em> and Arthur Schopenhauer's analysis of the <em>Upanishads</em>.
+      </p>
+      <p class="p r">
+        It was here, amidst industrial slaughter, that Schrödinger forged his fierce rejection of the 'quantum jump'. If particles leaped discontinuously between states without traversing continuous spacetime ~ as Niels Bohr and Werner Heisenberg claimed ~ physical causality was dead. Schrödinger resolved to demonstrate that subatomic reality was fundamentally continuous: an unbroken wave manifold governed by differential geometry.
+      </p>
+    </div>
+
+    <aside class="randglosse-col r">
+      <div class="glosse-card">
+        <div class="glosse-header">Archival Record · May 1916</div>
+        <div class="glosse-body">
+          <b>K.u.k. Festungsartillerie-Regiment Nr. 5:</b>
+          Stationed along the Isonzo barrier. Lieutenant Schrödinger commands battery emplacements facing Italian heavy artillery.
+          <span class="glosse-quote">„In the trench, nature admits no jumps ~ either the shell-shocked organism persists, or it vanishes. Discontinuity is the illusion of the observer who looked away.“</span>
+        </div>
+      </div>
+
+      <div class="glosse-card">
+        <div class="glosse-header">The Philosophical Lineage</div>
+        <div class="glosse-body">
+          Schrödinger's lifelong resistance to Göttingen's indeterminism rested upon three non-negotiable anchors:
+          <br><br>
+          1. <b>Ludwig Boltzmann:</b> The continuum of statistical mechanics.<br>
+          2. <b>Fritz Hasenöhrl:</b> Electromagnetic cavity radiation.<br>
+          3. <b>Arthur Schopenhauer:</b> The absolute singularity of the Subject (*Tat Tvam Asi*).
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ══════════ ACT II: THE AROSA RETREAT (CHRISTMAS 1925) ══════════ -->
+<section id="act2" class="act-container" style="background: linear-gradient(180deg, #101518 0%, #0b0d0e 100%);">
+  <div class="act-band">
+    <span class="act-band-title">Act II · The Alpine Solitude</span>
+    <span class="act-band-meta">Villa Herwig, December 1925 ~ Quantisierung als Eigenwertproblem</span>
+  </div>
+
+  <div class="folio-layout">
+    
+    <div class="main-col">
+      <div class="act-gate r">
+        <span class="act-gate-num">II.</span>
+        <h2 class="act-gate-h">Thirty-Eight Years Old, Past His Prime,<br>and Armed with <em>Black Pearls.</em></h2>
+        <p class="act-gate-deck">
+          In 1925, theoretical physics was a bloodsport for ruthlessly ambitious men in their early twenties. Heisenberg was twenty-four. Dirac was twenty-three. Wolfgang Pauli was twenty-five. Schrödinger was thirty-eight ~ an elder statesman widely dismissed as an elegant journeyman whose productive years were behind him.
+        </p>
+      </div>
+
+      <p class="p drop-fraktur r">
+        Suffering from recurrent tuberculosis, the full professor of the University of Zurich departed for the Swiss health resort of Arosa in late December 1925. He left his wife, Annemarie Bertel, in Zurich and took quarters at Villa Herwig with an unnamed former lover from Vienna ~ whose identity he concealed behind private shorthand in his diaries. To secure total sensory detachment, he sealed both ears with black pearl-tipped wax plugs.
+      </p>
+
+      <p class="p r">
+        Hermann Weyl, his colleague at the Eidgenössische Technische Hochschule (ETH) Zurich who covered his lecture duties during his absence, famously recorded: <em>„Schrödinger did his great work during a late erotic outburst in his life.“</em> Stimulated by Louis de Broglie’s matter-wave hypothesis and Albert Einstein’s endorsement in late 1925, Schrödinger set out to construct a genuine wave equation for the electron.
+      </p>
+
+      <div class="plaque-math r">
+        <div class="plaque-tag">
+          <span>Annalen der Physik · Band 79 (Received 27 January 1926)</span>
+          <span>The Time-Independent Eigenvalue Equation</span>
+        </div>
+        <div class="plaque-eq">
+          Ĥ ψ = E ψ  ~  [- (ℏ² / 2m) ∇² + V(r)] ψ = E ψ
+        </div>
+      </div>
+
+      <p class="p r">
+        Crucially, in that initial winter fortnight in Arosa, Schrödinger did not write the time-dependent equation. He solved the <strong>time-independent boundary-value problem</strong>. He realized that the discrete quantum states of the hydrogen atom were not ad-hoc quantum integers imposed upon classical orbits; they were the standing <strong>eigenvalues</strong> ($E_n$) of a differential operator, mathematically identical to the resonant harmonics of a vibrating string.
+      </p>
+
+      <p class="p r">
+        He followed this in June 1926 with his fourth paper, introducing the complete time-dependent equation: $i\hbar \partial_t \Psi = \hat{H}\Psi$. And when Göttingen partisans sneered that his wave mechanics was merely an alternative notation, Schrödinger struck back mathematically: in March 1926, he published a rigorous proof demonstrating that his continuous partial differential equations and Heisenberg's discrete matrix tables were formally equivalent ~ yet his wave mechanics retained the spatial continuity and differential inspectability that physics demanded.
+      </p>
+    </div>
+
+    <aside class="randglosse-col r">
+      <div class="glosse-card">
+        <div class="glosse-header">Historical Correction · The Equivalence</div>
+        <div class="glosse-body">
+          Pop-science accounts frequently credit Paul Dirac or John von Neumann with proving the equivalence of matrix mechanics and wave mechanics.
+          <br><br>
+          <b>The Historical Record:</b>
+          Schrödinger proved the formal mathematical equivalence <em>himself</em> in a paper received on March 18, 1926 (*Annalen der Physik*, Band 79, S. 734~756), weeks before Carl Eckart's independent paper in the United States.
+        </div>
+      </div>
+
+      <div class="glosse-card">
+        <div class="glosse-header">Heisenberg's Venom</div>
+        <div class="glosse-body">
+          <b>Werner Heisenberg to Wolfgang Pauli (8 June 1926):</b>
+          <span class="glosse-quote">„The more I think about the physical portion of the Schrödinger theory, the more disgusting I find it... What Schrödinger writes about the visualizability of his theory is simply not true; in other words, it is junk.“</span>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ══════════ ACT III: THE ARCHITECT OF CHEMISTRY ══════════ -->
+<section id="act3" class="act-container" style="background: linear-gradient(180deg, var(--loden-deep) 0%, #0b0d0e 100%);">
+  <div class="act-band">
+    <span class="act-band-title">Act III · The Topology of Matter</span>
+    <span class="act-band-meta">The Coulomb Sphere &amp; The Nodal Foundations of Chemistry</span>
+  </div>
+
+  <div class="folio-layout">
+    
+    <div class="main-col">
+      <div class="act-gate r">
+        <span class="act-gate-num">III.</span>
+        <h2 class="act-gate-h">Chemistry Is Not Solar Astronomy.<br>It Is <em>Harmonic Interference.</em></h2>
+        <p class="act-gate-deck">
+          Niels Bohr gifted elementary education a miniature solar system of electrons racing along planetary tracks. It was an attractive falsehood. Schrödinger cracked the Coulomb potential analytically and revealed the real architecture: electrons are three-dimensional standing harmonic manifolds.
+        </p>
+      </div>
+
+      <p class="p drop-fraktur r">
+        Bohr’s orbital circles were physically impossible. In classical electrodynamics, an accelerating orbital charge radiates electromagnetic energy continuously, collapsing into the proton nucleus within $10^{-11}$ seconds. Schrödinger eliminated the planetary orbits. Inserting the Coulomb potential $V(r) = -e^2 / (4\pi\varepsilon_0 r)$ into his equation and transforming into spherical coordinates $(r, \theta, \phi)$, the wavefunction separated into two analytical components: radial associated Laguerre polynomials $R_{nl}(r)$ and angular spherical harmonics $Y_l^m(\theta, \phi)$.
+      </p>
+
+      <div class="plaque-math r">
+        <div class="plaque-tag">
+          <span>Separation of Variables in Spherical Coordinates</span>
+          <span>Exact Eigenfunctions of the Hydrogen Atom</span>
+        </div>
+        <div class="plaque-eq">
+          Ψ_nlm(r, θ, φ) = R_nl(r) · Y_l^m(θ, φ)
+        </div>
+      </div>
+
+      <table class="austrian-table r">
+        <thead>
+          <tr>
+            <th>Subshell</th>
+            <th>Quantum Numbers</th>
+            <th>Nodal Geometry</th>
+            <th>Physical Reality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>s - Orbital</b></td>
+            <td>l = 0, m = 0</td>
+            <td>0 angular nodes, purely radial decay</td>
+            <td>Spherical symmetry. Zero orbital angular momentum.</td>
+          </tr>
+          <tr>
+            <td><b>p - Orbitals</b></td>
+            <td>l = 1, m = -1, 0, +1</td>
+            <td>1 planar node through the nucleus</td>
+            <td>Three orthogonal dumbbell lobes ($p_x, p_y, p_z$). Directional valence.</td>
+          </tr>
+          <tr>
+            <td><b>d - Orbitals</b></td>
+            <td>l = 2, m = -2..+2</td>
+            <td>2 planar or conical nodal surfaces</td>
+            <td>Cloverleaf manifolds and toroids. Transition-metal catalysis.</td>
+          </tr>
+          <tr>
+            <td><b>f - Orbitals</b></td>
+            <td>l = 3, m = -3..+3</td>
+            <td>3 intersecting nodal surfaces</td>
+            <td>Octupolar lobes. Lanthanide and actinide coordination chemistry.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="p r">
+        Spectroscopists had long labeled empirical emission series with arbitrary letters ~ *sharp, principal, diffuse, fundamental*. Schrödinger took those letters and proved they were the integer angular momentum solutions of a vibrating sphere. Total nodes equal $n - 1$; angular nodal surfaces equal $l$; radial nodes equal $n - l - 1$.
+      </p>
+      <p class="p r">
+        When Linus Pauling formulated hybridization theory ($sp^3, sp^2$) in 1931, he was directly manipulating Schrödinger’s linear combinations. The tetrahedral bonding geometry of carbon in diamond and DNA ($109.5^\circ$), the aromatic ring stability of benzene, and the crystalline coordination of metallurgy are not chemical folklore ~ they are the geometrical solutions of Schrödinger’s wave mechanics.
+      </p>
+    </div>
+
+    <aside class="randglosse-col r">
+      <div class="glosse-card">
+        <div class="glosse-header">Ernest Rutherford's Sneer</div>
+        <div class="glosse-body">
+          <span class="glosse-quote">„All science is either physics or stamp collecting.“</span>
+          <br><br>
+          Schrödinger permanently ended chemistry’s status as stamp collecting. Covalent bonds are constructive wave interference; bond anti-nodes represent molecular repulsion. Matter is standing wave interference.
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ══════════ ACT IV: THE MORAL RUPTURE & EXILE ══════════ -->
+<section id="act4" class="act-container" style="background: linear-gradient(180deg, #180f11 0%, #0b0d0e 100%);">
+  <div class="act-band">
+    <span class="act-band-title">Act IV · The Moral Rupture</span>
+    <span class="act-band-meta">1933~1938 · The Chair of Max Planck and the Escape from Graz</span>
+  </div>
+
+  <div class="folio-layout">
+    
+    <div class="main-col">
+      <div class="act-gate r">
+        <span class="act-gate-num">IV.</span>
+        <h2 class="act-gate-h">An Aryan Who Walked Away, and the<br><em>Moral Panic of Oxford.</em></h2>
+        <p class="act-gate-deck">
+          Schrödinger was an Aryan Austrian Catholic-Protestant. The Nuremberg Laws would never have touched him. Yet in 1933, he abandoned the most prestigious chair in European physics out of unvarnished moral contempt ~ embarking on an exile of displacement and Victorian scandal.
+        </p>
+      </div>
+
+      <p class="p drop-fraktur r">
+        In 1927, Schrödinger had succeeded Max Planck to the premier chair of theoretical physics at the Friedrich-Wilhelms-Universität in Berlin. When Adolf Hitler took power in January 1933, the regime launched the wholesale purging of Jewish civil servants and held book burnings on the Opernplatz. Schrödinger refused to serve as an Aryan decoration for the Third Reich.
+      </p>
+      <p class="p r">
+        While Werner Heisenberg chose to remain in Germany, negotiating compromises with ministerial bureaucrats and eventually directing the Nazi uranium project (*Uranverein*), Schrödinger resigned his post and left Berlin in the autumn of 1933. Max Born later observed that among non-Jewish German-speaking professors, Schrödinger's immediate, clean break with the Nazi regime was the most uncompromising.
+      </p>
+
+      <div class="secession-quote r">
+        <p>
+          „I cannot teach at a university where colleagues whose shoes I am not worthy to tie are dismissed and humiliated.“
+        </p>
+        <cite>Erwin Schrödinger on his departure from Berlin, 1933</cite>
+      </div>
+
+      <p class="p r">
+        Accommodated at Magdalen College, Oxford, his private life collided headlong with the moral hypocrisy of the senior common room. Schrödinger was married to Annemarie (Anny), but theirs was an openly non-exclusive marriage. Living with them in their Oxford house was Hilde March, the wife of Austrian physicist Arthur March. In May 1934, Hilde gave birth to Schrödinger’s daughter, Ruth.
+      </p>
+      <p class="p r">
+        Schrödinger insisted on raising Ruth under one roof with both Anny and Hilde in an open, harmonious household. For the Victorian-minded fellows of Magdalen, this was intolerable. Despite being awarded the Nobel Prize in Physics that same autumn, the college made it clear that a permanent fellowship would never be granted to a man running an open *ménage à trois*.
+      </p>
+    </div>
+
+    <aside class="randglosse-col r">
+      <div class="glosse-card">
+        <div class="glosse-header">Historical Record · Graz &amp; Escape</div>
+        <div class="glosse-body">
+          Unwisely accepting a chair at Graz in 1936, the Nazi Anschluss of March 1938 trapped him. Pressured by the rector, Schrödinger signed a coerced public confession of loyalty to survive.
+          <br><br>
+          It failed to protect him. In August 1938, the Nazi authorities dismissed him without pension for 'political unreliability'. Stripped of his passport and facing arrest, he fled across the Italian border disguised as a tourist with a single rucksack.
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ══════════ ACT V: WHAT IS LIFE? (DUBLIN 1943) ══════════ -->
+<section id="act5" class="act-container" style="background: linear-gradient(180deg, var(--loden-deep) 0%, #0b0d0e 100%);">
+  <div class="act-band">
+    <span class="act-band-title">Act V · The Dublin Lectures</span>
+    <span class="act-band-meta">February 1943 · Trinity College Dublin ~ The Aperiodic Solid</span>
+  </div>
+
+  <div class="folio-layout">
+    
+    <div class="main-col">
+      <div class="act-gate r">
+        <span class="act-gate-num">V.</span>
+        <h2 class="act-gate-h">From a Dublin Bicycle to the<br><em>Blueprint of the Double Helix.</em></h2>
+        <p class="act-gate-deck">
+          Éamon de Valera ~ Prime Minister of Ireland, a mathematics teacher who had faced a British firing squad in the 1916 Easter Rising ~ personally intervened to rescue Schrödinger, establishing the Dublin Institute for Advanced Studies (DIAS) at 64~65 Merrion Square to give him a permanent sanctuary.
+        </p>
+      </div>
+
+      <p class="p drop-fraktur r">
+        In wartime Dublin, living in Clontarf, Schrödinger bicycled through the Irish rain without a hat, wearing an old tweed jacket. In February 1943, before an audience of four hundred at Trinity College, he gave a series of public lectures published in 1944 as a slim 90-page monograph: <em>What is Life? The Physical Aspect of the Living Cell</em>.
+      </p>
+      <p class="p r">
+        Biology at the time was a largely descriptive discipline; genes were hypothetical Mendelian abstractions. Schrödinger attacked the cell with cold statistical thermodynamics. He posed two fundamental questions: Why must atoms be so small relative to organisms? And how does an infinitesimal cluster of atoms preserve genetic fidelity across generations without succumbing to thermal Brownian motion?
+      </p>
+
+      <p class="p r">
+        Drawing upon the target theory of Timoféeff-Ressovsky, Zimmer, and Max Delbrück, Schrödinger established that the gene could not be an ordinary periodic crystal. A periodic crystal (such as sodium chloride) repeats identically like wallpaper ~ it has high thermodynamic order, but its information storage capacity is zero. The genetic substance, Schrödinger deduced, must be an <strong>aperiodic solid</strong> (*aperiodischer Kristall*): an irregular, non-repeating sequence of covalent isomeric bonds functioning as an exact typographical code-script.
+      </p>
+
+      <div class="secession-quote r">
+        <p>
+          „Schrödinger’s book ‚What is Life?‘ was the precise catalyst that made us drop our previous work and dedicate ourselves to uncovering the physical structure of the gene.“
+        </p>
+        <cite>Francis Crick &amp; James D. Watson ~ Memoirs and Nobel Retrospectives</cite>
+      </div>
+
+      <p class="p r">
+        He further resolved the apparent paradox of living order: life does not violate the Second Law of Thermodynamics ($\Delta S \ge 0$). An organism maintains its internal structural negentropy by continually drawing thermodynamic free energy from its environment and metabolically venting high-entropy heat.
+      </p>
+      <p class="p r">
+        Nine years before Rosalind Franklin produced Photo 51 and Watson and Crick constructed their cardboard models of the double helix at the Cavendish Laboratory, an Austrian theoretical physicist in Dublin had deduced the physical necessity of the genetic code using nothing more than Boltzmann’s statistics and quantum bond chemistry.
+      </p>
+    </div>
+
+    <aside class="randglosse-col r">
+      <div class="glosse-card">
+        <div class="glosse-header">The Mechanism of Negentropy</div>
+        <div class="glosse-body">
+          <b>How does an organism evade death?</b>
+          <br><br>
+          A system left to itself decays toward thermodynamic equilibrium (maximum entropy, death). An organism evades this decay by continuously importing <em>negative entropy</em> from food and dissipating degraded thermal energy outward.
+        </div>
+      </div>
+
+      <div class="glosse-card">
+        <div class="glosse-header">Francis Crick's Confession</div>
+        <div class="glosse-body">
+          Crick was a physicist working for the British Admiralty on magnetic and acoustic naval mines. Reading <em>What is Life?</em> in 1946 convinced him that the secret of heredity was a physical problem solvable by X-ray crystallography, leading directly to his move to Cambridge.
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ══════════ ACT VI: THE SATIRICAL WEAPON (1935) ══════════ -->
+<section id="act6" class="act-container" style="background: linear-gradient(180deg, #180f11 0%, #0b0d0e 100%);">
+  <div class="act-band">
+    <span class="act-band-title">Act VI · The Cyanide Chamber</span>
+    <span class="act-band-meta">November 1935 · Die Naturwissenschaften ~ The Attack on Copenhagen</span>
+  </div>
+
+  <div class="folio-layout">
+    
+    <div class="main-col">
+      <div class="act-gate r">
+        <span class="act-gate-num">VI.</span>
+        <h2 class="act-gate-h">A Savage Satire That Was Turned<br>into a <em>Coffee-Mug Gimmick.</em></h2>
+        <p class="act-gate-deck">
+          Erwin Schrödinger did not devise his cat to celebrate the mystery of quantum superposition. He devised it to humiliate Niels Bohr, mock the Copenhagen measurement doctrine, and demonstrate that the collapse postulate was an intellectual absurdity.
+        </p>
+      </div>
+
+      <p class="p drop-fraktur r">
+        In late 1935, galvanized by correspondence with Albert Einstein following the Einstein-Podolsky-Rosen (EPR) paradox paper, Schrödinger published his three-part essay in <em>Die Naturwissenschaften</em> titled <em>„Die gegenwärtige Situation in der Quantenmechanik“</em>. He was disgusted by Bohr’s instrumentalist claim that a quantum entity possesses no objective physical state prior to measurement and that the act of observation creates reality out of probability waves.
+      </p>
+
+      <p class="p r">
+        To demonstrate the intellectual bankruptcy of this dogma, Schrödinger devised a diabolical amplifier. Penning a cat inside a steel chamber (*Stahlkammer*), he coupled its survival to a single radioactive atom with a 50% chance of decay in one hour. If the atom decays, a Geiger counter discharges, trips an electric relay, drops a hammer, shatters a phial of hydrocyanic acid (HCN), and poisons the cat.
+      </p>
+
+      <div class="plaque-math r">
+        <div class="plaque-tag">
+          <span>The Copenhagen Superposition Reduced to Macroscopic Absurdity</span>
+          <span>Section 5: 'Burleske Beispiele' (Burlesque Examples)</span>
+        </div>
+        <div class="plaque-eq">
+          |Ψ_system⟩ = (1/√2) |Decayed Atom ⊗ Shattered Phial ⊗ Dead Cat⟩ + (1/√2) |Intact Atom ⊗ Intact Phial ⊗ Living Cat⟩
+        </div>
+      </div>
+
+      <p class="p r">
+        Schrödinger’s explicit, devastating point was that this state is <strong>an objective impossibility</strong>. A cat is not a ghost. It is either an active biological organism or a cold corpse. To assert that the cat hovers in a 'smeared' (*verschmiert*) superposition of life and death until a human observer lifts the lid was, to Schrödinger, philosophical insanity.
+      </p>
+      <p class="p r">
+        The thought experiment was constructed as a lethal *reductio ad absurdum*: if your interpretation of the quantum formalism forces you to assert that a macroscopic cat is simultaneously dead and alive, then your interpretation is broken. Yet pop science enacted a grotesque inversion. Textbooks stripped away the biting satire, embraced the dead-and-alive cat as an adorable emblem of quantum wonder, printed it on T-shirts, and forgot that its creator had fired it as a high-caliber epistemic bullet at Copenhagen dogmatism.
+      </p>
+    </div>
+
+    <aside class="randglosse-col r">
+      <div class="glosse-card">
+        <div class="glosse-header">Original Text · November 1935</div>
+        <div class="glosse-body">
+          <span class="glosse-quote">„One can even set up quite burlesque cases [burleske Beispiele]... The psi-function of the entire system would express this by having in it the living and the dead cat (sit venia verbo ~ pardon the expression) mixed or smeared out in equal parts.“</span>
+          <br><br>
+          <i>Die Naturwissenschaften</i>, Band 23, Heft 48, S. 812.
+        </div>
+      </div>
+
+      <div class="glosse-card">
+        <div class="glosse-header">Einstein to Schrödinger (1950)</div>
+        <div class="glosse-body">
+          <b>Albert Einstein:</b>
+          <span class="glosse-quote">„You are the only contemporary physicist, besides Laue, who sees that one cannot get around the assumption of reality ~ if only one is honest. Most of them simply do not see what sort of risky game they are playing with reality.“</span>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ══════════ ACT VII: THE SOLITARY MONIST ══════════ -->
+<section id="act7" class="act-container" style="background: linear-gradient(180deg, #101518 0%, #0b0d0e 100%);">
+  <div class="act-band">
+    <span class="act-band-title">Act VII · The Vedantic Monist</span>
+    <span class="act-band-meta">Meine Weltansicht · The Denial of the Cartesian Cut</span>
+  </div>
+
+  <div class="folio-layout">
+    
+    <div class="main-col">
+      <div class="act-gate r">
+        <span class="act-gate-num">VII.</span>
+        <h2 class="act-gate-h">The Mind That Refused to Sever<br>the <em>Observer from the Cosmos.</em></h2>
+        <p class="act-gate-deck">
+          While post-war physics retreated into the instrumentalist slogan 'shut up and calculate', Schrödinger spent his Dublin evenings writing rigorous treatises on the profound metaphysical unity of subject and object.
+        </p>
+      </div>
+
+      <p class="p drop-fraktur r">
+        In his philosophical testament, <em>Meine Weltansicht</em> (*My View of the World*), composed across his years in Dublin and Vienna, Schrödinger tackled the foundational pathology of modern science: the Cartesian partition that severed the observing mind from the observed physical universe.
+      </p>
+
+      <p class="p r">
+        Bohr and Heisenberg solved the quantum measurement paradox by a coward's truce: they treated the measuring apparatus as classical, the particle as quantum, and placed an arbitrary 'cut' (*Schnitt*) between them. Schrödinger rejected this division as an intellectual surrender. Rooting his ontology in the non-dualism of Advaita Vedanta and the monism of Spinoza, he argued that consciousness is fundamentally singular:
+      </p>
+
+      <div class="secession-quote r">
+        <p>
+          „The world is given to me only once, not one existing and one perceived. Subject and object are only one. The barrier between them cannot be said to have broken down as a result of recent experience in the physical sciences, for this barrier does not exist.“
+        </p>
+        <cite>Erwin Schrödinger ~ Meine Weltansicht (Vienna, 1961)</cite>
+      </div>
+
+      <p class="p r">
+        The post-war American industrialization of physics had no patience for a Viennese polymath who read Homer in the original Greek and analyzed the Upanishads. The Manhattan Project, radar development, and the Cold War demanded calculation technicians ~ operators who could compute cross-sections for nuclear warheads and solid-state semiconductors without troubling themselves with philosophical ontology.
+      </p>
+      <p class="p r">
+        Schrödinger was sidelined as an eccentric relic of Old Europe. His wave equation was universally adopted as a calculating instrument, while his philosophical convictions were discarded. He died in Vienna on January 4, 1961, and was buried in the Alpine churchyard of Alpbach in Tyrol. On his wrought-iron grave cross, there is no cross and no religious inscription ~ only the partial differential equation of his life:
+      </p>
+
+      <div class="plaque-math r" style="text-align: center; border-left-color: var(--gold);">
+        <span style="font-family: var(--antiqua); font-size: 26px; font-style: italic; color: var(--gold);">
+          iℏ ∂ψ/∂t = Ĥψ
+        </span>
+      </div>
+    </div>
+
+    <aside class="randglosse-col r">
+      <div class="glosse-card">
+        <div class="glosse-header">Alpbach, Tyrol</div>
+        <div class="glosse-body">
+          <b>The Final Sanctuary:</b>
+          Schrödinger chose Alpbach for his burial, surrounded by the Tyrolean peaks where his mentor Fritz Hasenöhrl had fallen in 1915. The circle of Viennese statistical field theory closed where it began.
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ══════════ CODA: THE REALIGNMENT ══════════ -->
+<section id="coda" class="act-container" style="background: #070809;">
+  <div class="folio-layout" style="grid-template-columns: 1fr; max-width: 880px;">
+    
+    <div class="main-col">
+      <div class="act-gate r">
+        <span class="fraktur-lead">Schlusswort</span>
+        <h2 class="act-gate-h" style="font-size: clamp(36px, 5.5vw, 62px);">Dismantling the Cartoon.</h2>
+      </div>
+
+      <p class="p r">
+        It is time to discard the pop-science cartoon. Erwin Schrödinger was not a whimsical eccentric with an unfortunate pet in a box.
+      </p>
+
+      <p class="p r">
+        He was an artillery officer who survived the bloodiest offensive of the Great War with Schopenhauer in his pack. He was the moral academic who walked away from the most prestigious chair in European physics rather than serve Adolf Hitler. He was the man who endured the social ostracism of Oxford to live with the family he loved. He was the physicist who looked into a living cell and deduced the structural logic of DNA a decade before biology could touch it.
+      </p>
+
+      <div class="secession-quote r" style="border-color: var(--wax);">
+        <p>
+          He gave humanity the working partial differential equation that underwrites every microchip, laser, and drug in the modern world. The least we can do is stop talking about the cat.
+        </p>
+      </div>
+
+      <div style="margin-top: 3.5rem;" class="r">
+        <a href="On.html" style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); text-decoration: none; border-bottom: 2px solid var(--gold); padding-bottom: 5px;">
+          &larr; RETURN TO SERIES INDEX : ON
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ SCHOLARLY APPARATUS & SOURCES ══════════ -->
+<footer id="refs" class="apparatus-wrap">
+  <div class="apparatus-head">Scholarly Apparatus · Primary Literature &amp; Archival Records</div>
+  
+  <ol class="ref-list">
+    <li>Moore, Walter. (1989). <em>Schrödinger: Life and Thought</em>. Cambridge University Press. [The authoritative biographical record: Vienna upbringing, WWI artillery service, Arosa retreat, Oxford domestic arrangements, and Dublin years].</li>
+    <li>Schrödinger, Erwin. (1926). <em>Quantisierung als Eigenwertproblem</em> (Erste bis Vierte Mitteilung). <em>Annalen der Physik</em>, Vierte Folge, Band 79, S. 361~376; Band 79, S. 489~527; Band 80, S. 437~490; Band 81, S. 109~139.</li>
+    <li>Schrödinger, Erwin. (1926). <em>Über das Verhältnis der Heisenberg-Born-Jordanschen Quantenmechanik zu der meinen</em>. <em>Annalen der Physik</em>, Band 79, S. 734~756. [Schrödinger's primary proof of mathematical equivalence].</li>
+    <li>Schrödinger, Erwin. (1935). <em>Die gegenwärtige Situation in der Quantenmechanik</em>. <em>Die Naturwissenschaften</em>, Band 23, Heft 48, S. 807~812; Heft 49, S. 823~828; Heft 50, S. 844~849. [First publication of the cyanide chamber thought experiment].</li>
+    <li>Schrödinger, Erwin. (1944). <em>What is Life? The Physical Aspect of the Living Cell</em>. Cambridge University Press. [Trinity College Dublin lectures, February 1943].</li>
+    <li>Watson, James D. (1968). <em>The Double Helix: A Personal Account of the Discovery of the Structure of DNA</em>. Atheneum, New York. [Confirms Schrödinger's <em>What is Life?</em> as his primary motivation].</li>
+    <li>Crick, Francis. (1988). <em>What Mad Pursuit: A Personal View of Scientific Discovery</em>. Basic Books. [Confirms the 'aperiodic crystal' concept shifted him from physics into biology].</li>
+    <li>Schrödinger, Erwin. (1961). <em>Meine Weltansicht</em>. Paul Zsolnay Verlag, Vienna. (Published in English as <em>My View of the World</em>, Cambridge University Press, 1964).</li>
+    <li>Timoféeff-Ressovsky, N. W., Zimmer, K. G., &amp; Delbrück, M. (1935). <em>Über die Natur der Genmutation und der Genstruktur</em>. <em>Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen</em>, Band 1, S. 189~245.</li>
+    <li>Gribbin, John. (2012). <em>Erwin Schrödinger and the Quantum Revolution</em>. Wiley &amp; Sons.</li>
+  </ol>
+</footer>
+
+<script>
+// Reading Scroll Progress Indicator
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  prog.style.width = scrolled + '%';
+});
+
+// Intersection Observer for Reveal animations
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('on');
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.r').forEach(el => revealObs.observe(el));
+
+// Navigation Rail Tracking
+const sections = document.querySelectorAll('section, footer');
+const navDots = document.querySelectorAll('.nd');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    const secTop = sec.offsetTop - 120;
+    if (pageYOffset >= secTop) {
+      current = sec.getAttribute('id');
+    }
+  });
+  navDots.forEach(dot => {
+    dot.classList.remove('on');
+    if (dot.getAttribute('data-s') === current) {
+      dot.classList.add('on');
+    }
+  });
+});
+navDots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const targetId = dot.getAttribute('data-s');
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
